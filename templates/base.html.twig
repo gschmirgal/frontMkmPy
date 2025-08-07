@@ -12,6 +12,9 @@
         {% endblock %}
     </head>
     <body>
+        <a href="{{ path('home')}}">Accueil</a>
+        <a href="{{ path('expansion.list')}}">Editions</a>
+        <a href="{{ path('card.list')}}">Cartes</a>
         {% block body %}{% endblock %}
     </body>
 </html>

@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{"Card Details - "~card.name~"-"~expansion.name}} {% endblock %}
+
 {% block body %}
     <h1><a href="{{ path('card.expansionlist', {id: card.id })}}">{{ card.name }}</a></h1>
     <h2><a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a></h2>

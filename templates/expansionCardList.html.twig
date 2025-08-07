@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{"Cards list - "~expansion.name}} {% endblock %}
+
 {% block body %}
-    <h1>{{ expansion.name}}</h1>
+    <h1>{{expansion.name}}</h1>
     <ul>
     {% for card in cards |sort((a, b) => a.name <=> b.name)%}
         <li>
