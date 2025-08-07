@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1><a href="{{ path('card.expansionlist', {id: card.id })}}">{{ card.name }}</a></h1>
+    <h2><a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a></h2>
+    <table>
+        <tr>
+        {% for column in tableColumns %}
+            <th>{{ column }}</th>
+        {% endfor %}
+        </tr>
+        {% for price in prices %}  
+            <tr> 
+                {% for key, column in tableColumns %}
+                    <td>
+                    {% if key == 'dateData'%}
+                        {{ attribute(price, key) |date('Y-m-d')}}
+                    {% else %}
+                        {{ attribute(price, key) ~"€"}}
+                    {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

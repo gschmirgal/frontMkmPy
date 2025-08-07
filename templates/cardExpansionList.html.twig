@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ originalcard.name}}</h1>
+    <ul>
+    {% for card in cards |sort((a, b) => a.expansion.name <=> b.expansion.name)%}
+        <li>
+            <a href="{{ path('card.cardlist.detail', {expansionid: card.expansion.id, cardid: card.id })}}">{{ card.expansion.name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
