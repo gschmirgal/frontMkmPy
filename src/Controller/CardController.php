@@ -15,7 +15,7 @@ class CardController extends AbstractController{
     #[Route('/cards', name: 'card.list')]
     function show (Request $request, ProductsRepository $repository ): Response 
     {
-        $cards = $repository->findAll();
+        $cards = $repository->findUnique();
         return $this->render('cardList.html.twig', [
             'cards' => $cards,
         ]);

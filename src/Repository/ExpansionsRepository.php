@@ -16,6 +16,21 @@ class ExpansionsRepository extends ServiceEntityRepository
         parent::__construct($registry, Expansions::class);
     }
 
+        /**
+         * @return Expansions[] Returns an array of Expansions objects
+         */
+        public function findByName($value): array
+        {
+            return $this->createQueryBuilder('e')
+                ->andWhere('e.name LIKE :val')
+                ->setParameter('val', "%".$value."%")
+                ->orderBy('e.name', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+
+        }
+        
     //    /**
     //     * @return Expansions[] Returns an array of Expansions objects
     //     */

@@ -16,6 +16,37 @@ class ProductsRepository extends ServiceEntityRepository
         parent::__construct($registry, Products::class);
     }
 
+        /**
+         * @return Products[] Returns an array of Expansions objects
+         */
+        public function findByNameUnique($value): array
+        {
+            return $this->createQueryBuilder('c')
+                    ->select('MIN(c.id) as id, c.name')
+                    ->andWhere('c.name LIKE :val')
+                    ->setParameter('val', "%".$value."%")
+                    ->groupBy('c.name')
+                    ->orderBy('c.name', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+
+        }
+
+
+        /**
+         * @return Products[] Returns an array of Expansions objects
+         */
+        public function findUnique(): array
+        {
+            return $this->createQueryBuilder('c')
+                    ->select('MIN(c.id) as id, c.name')
+                    ->groupBy('c.name')
+                    ->orderBy('c.name', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+
+        }
+
     //    /**
     //     * @return Products[] Returns an array of Products objects
     //     */
