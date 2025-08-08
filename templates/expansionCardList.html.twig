@@ -4,11 +4,10 @@
 
 {% block body %}
     <h1>{{expansion.name}}</h1>
-    <ul>
-    {% for card in cards |sort((a, b) => a.name <=> b.name)%}
-        <li>
-            <a href="{{ path('expansion.cardlist.detail', {expansionid: expansion.id, cardid: card.id })}}">{{ card.name }}</a>
-        </li>
-    {% endfor %}
-    </ul>
+
+    <div class="list-group">
+        {% for card in cards |sort((a, b) => a.name <=> b.name) %}
+            <a class="list-group-item list-group-item-action" href="{{ path('expansion.cardlist.detail', {expansionid: expansion.id, cardid: card.id })}}">{{ card.name }}</a>
+        {% endfor %}
+    </div>
 {% endblock %}

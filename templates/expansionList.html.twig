@@ -4,11 +4,9 @@
 
 {% block body %}
     <h1>Expansions List</h1>
-    <ul>
-    {% for expansion in expansions %}
-        <li>
-            <a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a>
-        </li>
-    {% endfor %}
-    </ul>
+    <div class="list-group">
+        {% for expansion in expansions %}
+            <a class="list-group-item list-group-item-action" href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name}}</a>
+        {% endfor %}
+    </div>
 {% endblock %}
