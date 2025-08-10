@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
@@ -25,6 +27,17 @@ class Products
 
     #[ORM\Column]
     private ?\DateTime $dateAdded = null;
+
+    /**
+     * @var Collection<int, ScryfallProducts>
+     */
+    #[ORM\OneToMany(targetEntity: ScryfallProducts::class, mappedBy: 'cardMarketId')]
+    private Collection $scryfall;
+
+    public function __construct()
+    {
+        $this->scryfall = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -81,6 +94,36 @@ class Products
     public function setDateAdded(\DateTime $dateAdded): static
     {
         $this->dateAdded = $dateAdded;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ScryfallProducts>
+     */
+    public function getScryfall(): Collection
+    {
+        return $this->scryfall;
+    }
+
+    public function addScryfall(ScryfallProducts $scryfall): static
+    {
+        if (!$this->scryfall->contains($scryfall)) {
+            $this->scryfall->add($scryfall);
+            $scryfall->setCardMarketId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScryfall(ScryfallProducts $scryfall): static
+    {
+        if ($this->scryfall->removeElement($scryfall)) {
+            // set the owning side to null (unless already changed)
+            if ($scryfall->getCardMarketId() === $this) {
+                $scryfall->setCardMarketId(null);
+            }
+        }
 
         return $this;
     }

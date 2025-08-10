@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"Admin - "~script~" logs"}} {% endblock %}
+
+{% block body %}
+    <h1>{{script ~" script logs"}}</h1>
+    <!--<table class="table table-striped table-hover table-bordered">
+        <tr>
+        {% for column in tableColumns %}
+            <th>{{ column }}</th>
+        {% endfor %}
+        </tr>
+        {% for log in logs %}  
+            <tr> 
+                {% for key, column in tableColumns %}
+                    <td>
+                    {% if key == 'dateData'%}
+                        {{ attribute(log, key) |date('Y-m-d')}}
+                    {% else %}
+                        {{ attribute(log, key)}}
+                    {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>-->
+{% endblock %}

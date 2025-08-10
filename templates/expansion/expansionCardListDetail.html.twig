@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{"Card Details - "~card.name~"-"~expansion.name}} {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/expansionCardListDetail.css') }}">
+{% endblock %}
 
 {% block body %}
     <h1><a href="{{ path('card.expansionlist', {id: card.id })}}">{{ card.name }}</a></h1>
     <h2><a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a></h2>
+    <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid mb-3 card">
     <table class="table table-striped table-hover table-bordered">
-        <tr>
+        <tr> 
         {% for column in tableColumns %}
             <th>{{ column }}</th>
         {% endfor %}

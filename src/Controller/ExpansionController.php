@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Asset\Packages;
 
 use App\Repository\ExpansionsRepository;
 use App\Repository\ProductsRepository;
@@ -17,7 +18,7 @@ class ExpansionController extends AbstractController{
     function show (Request $request, ExpansionsRepository $repository ): Response 
     {
         $expansions = $repository->findAll();
-        return $this->render('expansionList.html.twig', [
+        return $this->render('expansion/expansionList.html.twig', [
             'expansions' => $expansions,
         ]);
     }
@@ -27,19 +28,26 @@ class ExpansionController extends AbstractController{
     {   
         $expansion = $repositoryExp->find($id);
         $cards = $repositoryProd->findBy(['expansion' => $id]);
-        return $this->render('expansionCardList.html.twig', [
+        return $this->render('expansion/expansionCardList.html.twig', [
             'expansion' => $expansion,
             'cards' => $cards,
         ]);
     }
 
     #[Route('/expansion/{expansionid}/{cardid}', name: 'expansion.cardlist.detail', requirements: ['expansionid' => '\d+', 'cardid' => '\d+'])]
-    function showSpecificCardExpansion (Request $request, int $expansionid, int $cardid, ExpansionsRepository $repositoryExp, ProductsRepository $repositoryProd, PricesRepository $repositoryPrices ): Response 
+    function showSpecificCardExpansion (Request $request, int $expansionid, int $cardid, Packages $assets, ExpansionsRepository $repositoryExp, ProductsRepository $repositoryProd, PricesRepository $repositoryPrices ): Response 
     {   
         $expansion = $repositoryExp->find($expansionid);
         $card = $repositoryProd->find($cardid);
         $prices = $repositoryPrices->findBy(['product' => $cardid]);
-        //dd($expansion, $card, $prices);
+        $scryfall = $card->getScryfall()->first(); // Assuming getScryfall() returns a Collection, we take the first item
+        
+        $cardArt = $scryfall ? $scryfall->getImgPngUri() : "";
+        
+        if(!$cardArt){
+            $cardArt = $assets->getUrl('img/no_card.png');
+
+        }
 
         $tableColumns = [
             'dateData'  => 'Date',
@@ -58,9 +66,10 @@ class ExpansionController extends AbstractController{
 
         ];
 
-
-        return $this->render('expansionCardListDetail.html.twig', [
+        //dd($card->getScryfall()->getImgPngUri());
+        return $this->render('expansion/expansionCardListDetail.html.twig', [
             'expansion' => $expansion,
+            'cardArt' => $cardArt,
             'card' => $card,
             'prices' => $prices,
             'tableColumns' => $tableColumns,

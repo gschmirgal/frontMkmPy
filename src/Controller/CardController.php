@@ -16,7 +16,7 @@ class CardController extends AbstractController{
     function show (Request $request, ProductsRepository $repository ): Response 
     {
         $cards = $repository->findUnique();
-        return $this->render('cardList.html.twig', [
+        return $this->render('card/cardList.html.twig', [
             'cards' => $cards,
         ]);
     }
@@ -26,7 +26,7 @@ class CardController extends AbstractController{
     {   
         $originalcard = $repositoryProd->find($id);
         $cards = $repositoryProd->findBy(['idMetaCard' => $originalcard->getIdMetaCard()]);
-        return $this->render('cardExpansionList.html.twig', [
+        return $this->render('card/cardExpansionList.html.twig', [
             'originalcard' => $originalcard,
             'cards' => $cards,
         ]);
