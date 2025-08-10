@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>{{script ~" script logs"}}</h1>
-    <!--<table class="table table-striped table-hover table-bordered">
+    <table class="table table-striped table-hover table-bordered">
         <tr>
         {% for column in tableColumns %}
             <th>{{ column }}</th>
@@ -14,14 +14,16 @@
             <tr> 
                 {% for key, column in tableColumns %}
                     <td>
-                    {% if key == 'dateData'%}
-                        {{ attribute(log, key) |date('Y-m-d')}}
+                    {% if column in ['dateImport', 'dateImportFile'] %}
+                        {{ attribute(log, column) |date('Y-m-d h:m:s')}}
+                    {% elseif column in ['dateData'] %}
+                        {{ attribute(log, column) |date('Y-m-d')}}
                     {% else %}
-                        {{ attribute(log, key)}}
+                        {{ attribute(log, column)}}
                     {% endif %}
                     </td>
                 {% endfor %}
             </tr>
         {% endfor %}
-    </table>-->
+    </table>
 {% endblock %}

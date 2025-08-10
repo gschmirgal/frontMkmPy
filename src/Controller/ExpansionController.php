@@ -39,7 +39,7 @@ class ExpansionController extends AbstractController{
     {   
         $expansion = $repositoryExp->find($expansionid);
         $card = $repositoryProd->find($cardid);
-        $prices = $repositoryPrices->findBy(['product' => $cardid]);
+        $prices = $repositoryPrices->findBy(['product' => $cardid],['id' => 'DESC']);
         $scryfall = $card->getScryfall()->first(); // Assuming getScryfall() returns a Collection, we take the first item
         
         $cardArt = $scryfall ? $scryfall->getImgPngUri() : "";
@@ -66,7 +66,6 @@ class ExpansionController extends AbstractController{
 
         ];
 
-        //dd($card->getScryfall()->getImgPngUri());
         return $this->render('expansion/expansionCardListDetail.html.twig', [
             'expansion' => $expansion,
             'cardArt' => $cardArt,

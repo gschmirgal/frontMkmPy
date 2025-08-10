@@ -7,7 +7,16 @@
 
     <div class="list-group">
         {% for card in cards |sort((a, b) => a.name <=> b.name) %}
-            <a class="list-group-item list-group-item-action" href="{{ path('expansion.cardlist.detail', {expansionid: expansion.id, cardid: card.id })}}">{{ card.name }}</a>
+            {% if card.scryfall.first %}
+                {% set imgUri = card.scryfall.first.imgNormalUri %}
+
+            {% else %}
+                {% set imgUri = asset('img/no_card.png') %}
+            {% endif %}
+            <a class="list-group-item list-group-item-action hover-link" 
+            href="{{ path('expansion.cardlist.detail', {expansionid: expansion.id, cardid: card.id })}}" 
+            data-img="{{imgUri}}">{{ card.name }}</a>
+
         {% endfor %}
     </div>
 {% endblock %}

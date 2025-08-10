@@ -14,9 +14,10 @@ class AdminController extends AbstractController{
     #[Route('/mkmpy-logs', name: '.logs.mkmpy')]
     function mkmpylogs (Request $request, LogsRepository $repository ): Response 
     {
-        $logs = $repository->findall();
+        $logs = $repository->findBy([], ['id' => 'DESC']);
+
         return $this->render('admin/logs.html.twig', [
-            'tableColumns' => [],
+            'tableColumns' => ['id', 'dateImport', 'dateImportFile', 'dateData'],
             'script' => 'MKM.py',
             'logs' => $logs,
         ]);
