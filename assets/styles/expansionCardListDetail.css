@@ -3,3 +3,9 @@
     height: auto;
     max-width: 322px;
 }
+
+.price-chart {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+}

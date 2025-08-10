@@ -12,6 +12,10 @@ use App\Repository\ExpansionsRepository;
 use App\Repository\ProductsRepository;
 use App\Repository\PricesRepository;
 
+
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
+
 class ExpansionController extends AbstractController{
 
     #[Route('/expansions', name: 'expansion.list')]
@@ -35,7 +39,7 @@ class ExpansionController extends AbstractController{
     }
 
     #[Route('/expansion/{expansionid}/{cardid}', name: 'expansion.cardlist.detail', requirements: ['expansionid' => '\d+', 'cardid' => '\d+'])]
-    function showSpecificCardExpansion (Request $request, int $expansionid, int $cardid, Packages $assets, ExpansionsRepository $repositoryExp, ProductsRepository $repositoryProd, PricesRepository $repositoryPrices ): Response 
+    function showSpecificCardExpansion (Request $request, int $expansionid, int $cardid, Packages $assets, ExpansionsRepository $repositoryExp, ProductsRepository $repositoryProd, PricesRepository $repositoryPrices, ChartBuilderInterface $chartBuilder): Response 
     {   
         $expansion = $repositoryExp->find($expansionid);
         $card = $repositoryProd->find($cardid);
@@ -66,12 +70,42 @@ class ExpansionController extends AbstractController{
 
         ];
 
+        $data = [];
+
+        foreach( $prices as $price ){
+            $data['labels'][] = $price->getDateData()->format('Y-m-d');
+            
+            foreach( ['avg1', 'avg1Foil'] as $index =>$key ){
+                if( !isset($data['datasets'][$index]) ){
+                    $data['datasets'][$index] = [
+                        'label' => $key,
+                        'data' => [],
+                    ];
+                }
+                $data['datasets'][$index]['data'][] = $price->{"get".$key}();
+            }
+
+        }
+
+        foreach( $data['datasets'] as $index => $dataset ){
+            $data['datasets'][$index]['label'] = $key;
+            $data['datasets'][$index]['backgroundColor'] = 'rgb(255, 99, 132)';
+            $data['datasets'][$index]['borderColor'] = 'rgb(255, 99, 132)';
+        }
+
+        
+
+
+        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart->setData($data);
+
         return $this->render('expansion/expansionCardListDetail.html.twig', [
             'expansion' => $expansion,
             'cardArt' => $cardArt,
             'card' => $card,
             'prices' => $prices,
             'tableColumns' => $tableColumns,
+            'chart' => $chart,
         ]);
     }
 

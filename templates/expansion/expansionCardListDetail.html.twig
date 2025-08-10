@@ -6,9 +6,15 @@
 {% endblock %}
 
 {% block body %}
-    <h1><a href="{{ path('card.expansionlist', {id: card.id })}}">{{ card.name }}</a></h1>
-    <h2><a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a></h2>
-    <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid mb-3 card">
+    <h1><a href="{{ path('card.expansionlist', {id: card.id })}}">{{ card.name }}</a> - <a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a></h1>
+    <div class="row align-items-center">
+        <div class="col-auto text-center">
+        <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid mb-3 card">
+        </div>
+        <div class="col">
+            {{ render_chart(chart,{'class': 'price-chart'}) }}
+        </div>
+    </div>
     <table class="table table-striped table-hover table-bordered">
         <tr> 
         {% for column in tableColumns %}
