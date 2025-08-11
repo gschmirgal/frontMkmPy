@@ -19,10 +19,51 @@ class SearchController extends AbstractController{
         $search     = $request->query->get('search');
         $expansions = $repositoryExp->findByName($search);
         $cards      = $repositoryCards->findByNameUnique($search);
+
+        $expansionsList = [[
+                'type' => 'primary',
+                'content' => 'Expansions :',
+            ],
+            [
+                'type' => 'secondary',
+                'content' => count($expansions) . ' result(s)',
+            ],
+        ];
+        foreach( $expansions as $expansion ){
+            $expansionsList[] = [
+                'type' => 'link',
+                'content' => $expansion->getName(),
+                'route' => 'expansion.cardlist',
+                'routeParams' => [
+                    'id' => $expansion->getId(),
+                ],
+            ];
+        }
+
+        $cardsList = [[
+                'type' => 'primary',
+                'content' => 'Cards :',
+            ],
+            [
+                'type' => 'secondary',
+                'content' => count($cards) . ' result(s)',
+            ],
+        ];
+        foreach( $cards as $card ){
+            $cardsList[] = [
+                'type' => 'link',
+                'content' => $card['name'],
+                'route' => 'card.expansionlist',
+                'routeParams' => [
+                    'id' => $card['id'],
+                ],
+            ];
+        }
+
         return $this->render('searchList.html.twig', [
             'search' => $search,
-            'expansions' => $expansions,
-            'cards' => $cards,
+            'expansionsList' => $expansionsList,
+            'cardsList' => $cardsList,
         ]);
     }
 

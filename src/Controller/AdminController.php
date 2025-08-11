@@ -11,15 +11,53 @@ use App\Repository\LogsRepository;
 #[Route('/admin', name: 'admin')]
 class AdminController extends AbstractController{
 
+    private array $tableColumns = [
+        'id' => 'ID',
+        'dateImport' => 'Date Import',
+        'dateImportFile' => 'Date Import File',
+        'dateData' => 'Date Data',
+        'status' => 'Status'
+    ];
+
     #[Route('/mkmpy-logs', name: '.logs.mkmpy')]
     function mkmpylogs (Request $request, LogsRepository $repository ): Response 
     {
         $logs = $repository->findBy([], ['id' => 'DESC']);
 
+
+        $data = [];
+        $tableData = [];
+        foreach( $logs as $log ){
+            $row = [];
+            foreach (array_keys($this->tableColumns) as $col) {
+                $getter = 'get' . ucfirst($col);
+                if (method_exists($log, $getter)) {
+                    $value = $log->$getter();
+                    if (in_array($col, ['dateImport', 'dateImportFile'])) {
+                        $value = $value->format('Y-m-d H:i:s');
+                    }elseif (in_array($col, ['dateData'])) {
+                        $value = $value->format('Y-m-d');
+                    }elseif ($col === 'status') {
+                        $value = $value."€";
+                    }
+
+                } elseif ($col === 'status') {
+                    $value = $log->getStep()->getStep();
+
+                } else {
+                    $value = null;
+                }
+
+                $row[] = $value;
+            }
+            $tableData[] = $row;
+
+        }
+
         return $this->render('admin/logs.html.twig', [
-            'tableColumns' => ['id', 'dateImport', 'dateImportFile', 'dateData'],
+            'tableColumns' => array_values($this->tableColumns),
             'script' => 'MKM.py',
-            'logs' => $logs,
+            'logs' => $tableData,            
         ]);
     }
 

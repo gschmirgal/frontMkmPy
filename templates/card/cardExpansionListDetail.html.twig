@@ -15,24 +15,6 @@
             {{ render_chart(chart,{'class': 'price-chart'}) }}
         </div>
     </div>
-    <table class="table table-striped table-hover table-bordered">
-        <tr> 
-        {% for column in tableColumns %}
-            <th>{{ column }}</th>
-        {% endfor %}
-        </tr>
-        {% for price in prices %}  
-            <tr> 
-                {% for key, column in tableColumns %}
-                    <td>
-                    {% if key == 'dateData'%}
-                        {{ attribute(price, key) |date('Y-m-d')}}
-                    {% else %}
-                        {{ attribute(price, key) ~"€"}}
-                    {% endif %}
-                    </td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
+    {{ component('table', {headers: headerstable, rows: prices}) }}
+
 {% endblock %}

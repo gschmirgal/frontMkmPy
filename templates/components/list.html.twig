@@ -1,0 +1,27 @@
+{# templates/components/list.html.twig #}
+<div class="list-group">
+    {% for d in data  %}
+        {% set classSupp = "" %}
+        {% if d.imgHover is defined %}
+            {% set imgHover = 'data-img=' ~ d.imgHover  %}
+            {% set classSupp = classSupp ~ " hover-link" %}
+
+        {% else %}
+            {% set imgHover = "" %}
+        {% endif %}
+
+        {% if d.type == "primary" %}
+            <div class="list-group-item list-group-item-primary{{classSupp}}" {{ imgHover }}>{{ d.content }}</div>
+        {% elseif d.type == "secondary" %}
+            <div class="list-group-item list-group-item-secondary fst-italic{{classSupp}}" {{ imgHover }}>{{ d.content }}</div>
+        {% elseif d.type == "link" %}
+            <a class="list-group-item list-group-item-action{{classSupp}}" 
+            href="{{ path(d.route, d.routeParams) }}" 
+            {{ imgHover }}>{{ d.content }}</a>
+        {% endif %}
+
+    {% endfor %}
+</div>
+
+
+        

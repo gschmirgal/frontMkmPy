@@ -4,26 +4,14 @@
 
 {% block body %}
     <h1>Recherche</h1>
-    <p>{{ (cards|length + expansions|length) ~ " match(s) for: \""~search~"\""}}</p>
+    <p>{{ (cardsList|length + expansionsList|length - 4) ~ " match(s) for: \""~search~"\""}}</p>
     
     <div class="row">
         <div class="col">
-            <div class="list-group">
-                <div class="list-group-item list-group-item-primary" active>Expansions :</div>
-                <div class="list-group-item list-group-item-secondary fst-italic">{{expansions|length ~ " result(s)" }}</div>
-                {% for expansion in expansions %}
-                    <a class="list-group-item list-group-item-action" href="{{ path('expansion.cardlist', {id: expansion.id})}}">{{ expansion.name }}</a>
-                {% endfor %}
-            </div>
+            {{ component('list', {data: expansionsList}) }}
         </div>
         <div class="col">
-            <div class="list-group">
-                <div class="list-group-item list-group-item-primary" active>Cards :</div>
-                <div class="list-group-item list-group-item-secondary fst-italic">{{cards|length ~ " result(s)" }}</div>
-                {% for card in cards %}
-                    <a class="list-group-item list-group-item-action" href="{{ path('card.expansionlist', {id: card.id})}}">{{ card.name }}</a>
-                {% endfor %}
-            </div>
+            {{ component('list', {data: cardsList}) }}
         </div>
   </div>
 {% endblock %}

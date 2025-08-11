@@ -4,9 +4,5 @@
 
 {% block body %}
     <h1>Expansions List</h1>
-    <div class="list-group">
-        {% for expansion in expansions %}
-            <a class="list-group-item list-group-item-action" href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name}}</a>
-        {% endfor %}
-    </div>
+    {{ component('list', {data: expansions}) }}
 {% endblock %}

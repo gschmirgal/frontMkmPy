@@ -55,101 +55,91 @@ Ce projet permet de gérer des produits (cartes), leurs extensions, les prix ass
 - `src/Repository/` : Repositories Doctrine
 - `src/Controller/` : Contrôleurs Symfony (ex : `CardController`)
 - `templates/` : Templates Twig (ex : `cardList.html.twig`, `searchList.html.twig`)
-- `assets/` : Fichiers JS/CSS (gérés par AssetMapper)
-- `migrations/` : Migrations Doctrine
-- `.env` : Variables d’environnement
-- `public/` : Fichiers accessibles publiquement (index.php, assets compilés)
 
 
-## Utilisation
+# frontMkmPy
 
-- Lancer le serveur de développement :
-  ```bash
-  symfony server:start
-  ```
-- Générer une nouvelle migration :
-  ```bash
-  php bin/console make:migration
-  ```
-- Appliquer les migrations :
-  ```bash
-  php bin/console doctrine:migrations:migrate
-  ```
-- Compiler les assets (si besoin) :
-  ```bash
-  php bin/console asset-map:compile
-  ```
-
-### Exemple d’utilisation
-
-- Accéder à la liste des cartes : http://localhost:8000/cards
-- Accéder à la recherche : http://localhost:8000/search?query=nom
-- Voir le détail d’une carte : http://localhost:8000/card/{cardid}/{expansionid}/
-
-
+frontMkmPy est une application web développée avec Symfony, Doctrine ORM et Twig, servant de front-end pour la base de données du projet [mkmpy](https://github.com/gschmirgal/mkmpy) (présent également sur mon GitHub). Elle permet de gérer des cartes à collectionner, leurs extensions, et d'afficher des statistiques de prix.
 
 ## Fonctionnalités principales
 
-- Affichage de la liste des cartes et extensions
-- Recherche multi-critères sur les cartes et extensions avec affichage des résultats groupés (voir `templates/searchList.html.twig`)
-- Détail d’une carte et de ses prix
-- Gestion des relations entre entités (produits, extensions, logs, etc.)
-- Utilisation de Twig pour le rendu HTML
-- Gestion des assets JS/CSS avec AssetMapper (pas de Webpack nécessaire)
-- Utilisation de Bootstrap et Bootstrap Icons pour le style
+- Gestion des entités : cartes (produits), extensions, prix, logs, etc.
+- Affichage de listes et de détails de cartes/extensions
+- Recherche multi-critères
+- Visualisation de l'évolution des prix avec des graphiques dynamiques (Chart.js)
+- Interface responsive avec Bootstrap 5
+- Thème clair/sombre dynamique
 
+## Prérequis
 
-## Conseils & Astuces
+- PHP >= 8.1
+- Composer
+- MySQL ou MariaDB
+- Node.js (optionnel, pour certains assets)
 
-- Les relations entre entités sont gérées par Doctrine via les attributs PHP.
-- Les données initiales peuvent être insérées dans les fichiers de migration si besoin.
-- Ne jamais committer de secrets de production dans `.env`.
-- Pour utiliser Bootstrap Icons, ajoute dans `base.html.twig` :
-  ```html
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+## Installation
+
+1. **Cloner le dépôt**
+  ```bash
+  git clone <url-du-repo>
+  cd frontMkmPy
   ```
-- Pour ajouter un asset JS/CSS, place-le dans `assets/` et référence-le dans `app.js` ou via `importmap()` dans Twig.
-- Pour des requêtes Doctrine avancées (distinct, group by, min/max), voir les méthodes du repository `ProductsRepository`.
+2. **Installer les dépendances PHP**
+  ```bash
+  composer install
+  ```
+3. **Configurer l'environnement**
+  - Copier `.env` en `.env.local` et adapter les variables (notamment `DATABASE_URL`).
+4. **Créer la base de données et lancer les migrations**
+  ```bash
+  php bin/console doctrine:database:create
+  php bin/console doctrine:migrations:migrate
+  ```
+5. **Compiler les assets (si besoin)**
+  ```bash
+  php bin/console asset-map:compile
+  ```
+6. **Lancer le serveur de développement**
+  ```bash
+  symfony server:start
+  # ou
+  php -S localhost:8000 -t public
+  ```
 
+## Structure du projet
 
-## Structure de la base de données (exemple)
+- `src/Entity/` : Entités Doctrine (Products, Expansions, Prices, etc.)
+- `src/Controller/` : Contrôleurs Symfony
+- `src/Repository/` : Repositories Doctrine
+- `templates/` : Templates Twig
+- `assets/` : Fichiers JS/CSS (AssetMapper)
+- `migrations/` : Migrations Doctrine
+- `public/` : Fichiers accessibles publiquement
 
-- Table `products` : id, name, expansion_id, ...
-- Table `expansions` : id, name, ...
-- Table `prices` : id, product_id, log_id, ...
-- Table `logs` : id, dateImport, dateImportFile, step_id, ...
-- Table `logsteps` : id, step
+## Exemples d'utilisation
 
-Les relations sont gérées par Doctrine (ManyToOne, etc.) et les clés étrangères sont créées via les migrations.
+- Accéder à la liste des extensions : `/expansions`
+- Voir les cartes d'une extension : `/expansion/{id}`
+- Voir le détail d'une carte : `/expansion/{expansionid}/{cardid}`
+- Rechercher une carte ou une extension : `/search?search=motclef`
 
-## FAQ
+## Technologies utilisées
 
-**Q : Comment ajouter une nouvelle entité ?**
-A : Utilise la commande `php bin/console make:entity` puis crée une migration.
+- Symfony 6+
+- Doctrine ORM
+- Twig
+- Bootstrap 5
+- Chart.js (via Symfony UX Chart.js)
+- AssetMapper (importmap)
 
-**Q : Comment ajouter un champ ou une relation ?**
-A : Modifie l’entité, puis `php bin/console make:migration` et `php bin/console doctrine:migrations:migrate`.
+## Conseils
 
-**Q : Comment personnaliser le style ?**
-A : Modifie les fichiers dans `assets/` et les templates Twig.
-
-## Liens utiles
-
-- [Documentation Symfony](https://symfony.com/doc/current/index.html)
-- [Documentation Doctrine](https://www.doctrine-project.org/projects/doctrine-orm/en/current/index.html)
-- [Twig](https://twig.symfony.com/doc/3.x/)
-- [AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html)
-- [Bootstrap Icons](https://icons.getbootstrap.com/)
-
-## Contribution
-
-Les contributions sont les bienvenues !
-1. Forkez le projet
-2. Créez une branche (`git checkout -b feature/ma-feature`)
-3. Commitez vos modifications (`git commit -am 'Ajout d\'une feature'`)
-4. Poussez la branche (`git push origin feature/ma-feature`)
-5. Ouvrez une Pull Request
+- Les relations entre entités sont gérées par Doctrine (attributs PHP).
+- Les assets JS/CSS sont gérés par AssetMapper, pas besoin de Webpack.
+- Pour ajouter un graphique, utilise le composant Chart.js (`composer require symfony/ux-chartjs`).
+- Pour personnaliser le thème, modifie les fichiers dans `assets/` et les templates Twig.
 
 ## Licence
 
-MIT
+MIT (à adapter selon votre projet)
+## Contribution

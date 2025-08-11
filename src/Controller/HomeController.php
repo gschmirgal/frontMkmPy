@@ -13,7 +13,7 @@ use App\Repository\PricesRepository;
 class HomeController extends AbstractController{
 
     #[Route('/', name: 'home')]
-    function home (Request $request): Response 
+    function home (): Response 
     {
         return $this->render('home.html.twig');
     }
