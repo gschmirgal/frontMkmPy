@@ -67,7 +67,7 @@ class CardController extends AbstractController{
         }
         
         return $this->render('card/cardList.html.twig', [
-            'list' => $list,
+            'cards' => $list,
         ]);
     }
 
