@@ -11,6 +11,20 @@ Elle sert d’interface front-end pour la base de données du projet [mkmpy](htt
 - Thème clair/sombre, hover image, responsive Bootstrap
 - Pagination (KnpPaginator)
 
+## Captures d'écran
+
+Quelques aperçus de l'application :
+
+![Accueil](.screenshots/accueil.png)
+![Liste des cartes](.screenshots/cardlist.png)
+![Détail carte](.screenshots/carddetails.png)
+![Carte dans extension](.screenshots/cardinext.png)
+![Versions carte](.screenshots/cardversion.png)
+![Liste extensions](.screenshots/extlist.png)
+![Recherche](.screenshots/search.png)
+![Import log](.screenshots/importlog.png)
+![Thème clair](.screenshots/lighttheme.png)
+
 ## Stack technique
 
 - Symfony 6+
