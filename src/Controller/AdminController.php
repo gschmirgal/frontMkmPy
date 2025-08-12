@@ -19,7 +19,7 @@ class AdminController extends AbstractController{
         'status' => 'Status'
     ];
 
-    private int $tableLimit = 5;
+    private int $tableLimit = 20;
 
     #[Route('/mkmpy-logs', name: '.logs.mkmpy')]
     function mkmpylogs (Request $request, LogsRepository $repository ): Response 
