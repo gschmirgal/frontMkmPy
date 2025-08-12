@@ -50,7 +50,9 @@ class ProductsRepository extends ServiceEntityRepository
         public function findByMetaCardOrderByExpansionName(int $idMetaCard) : array
         {
             return $this->createQueryBuilder('p')
+                ->select('p, e, s')
                 ->leftJoin('p.expansion', 'e')
+                ->leftJoin('p.scryfall', 's')
                 ->where('p.idMetaCard = :idMetaCard')
                 ->setParameter('idMetaCard', $idMetaCard)
                 ->orderBy('e.name', 'ASC')
