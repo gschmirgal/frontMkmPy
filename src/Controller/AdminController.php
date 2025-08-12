@@ -19,10 +19,17 @@ class AdminController extends AbstractController{
         'status' => 'Status'
     ];
 
+    private int $tableLimit = 5;
+
     #[Route('/mkmpy-logs', name: '.logs.mkmpy')]
     function mkmpylogs (Request $request, LogsRepository $repository ): Response 
     {
-        $logs = $repository->findBy([], ['id' => 'DESC']);
+
+
+        $page = $request->query->getInt('page', 1);
+        $logs = $repository->paginateLogs($page, $this->tableLimit);
+
+        //$logs = $repository->findBy([], ['id' => 'DESC']);
 
 
         $data = [];
@@ -53,11 +60,11 @@ class AdminController extends AbstractController{
             $tableData[] = $row;
 
         }
-
         return $this->render('admin/logs.html.twig', [
             'tableColumns' => array_values($this->tableColumns),
             'script' => 'MKM.py',
-            'logs' => $tableData,            
+            'logs' => $tableData,
+            'addPaginationRender' => $logs,           
         ]);
     }
 

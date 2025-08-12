@@ -31,7 +31,7 @@ class CardController extends AbstractController{
                 'backgroundColor' => 'rgba(0,255,255,0.3)'
             ],
         ];
-
+    private int $tableLimit = 30;
     private array $tableColumns = [
             'dateData'  => 'Date',
             'avg'       => 'Average',
@@ -108,7 +108,13 @@ class CardController extends AbstractController{
     {   
         $expansion = $repositoryExp->find($expansionid);
         $card = $repositoryProd->find($cardid);
-        $prices = $repositoryPrices->findBy(['product' => $cardid],['id' => 'asc']);
+        //$prices = $repositoryPrices->findBy(['product' => $cardid],['id' => 'asc']);
+
+        
+        $page = $request->query->getInt('page', 1);
+        $prices = $repositoryPrices->paginatePrices($cardid, $page, $this->tableLimit);
+
+
         $scryfall = $card->getScryfall()->first(); // Assuming getScryfall() returns a Collection, we take the first item
         
         $cardArt = $scryfall ? $scryfall->getImgPngUri() : "";
@@ -162,6 +168,7 @@ class CardController extends AbstractController{
 
             'prices' => $tableData,
             'headerstable' => array_values($this->tableColumns),
+            'addPaginationRender' => $prices,
 
             'chart' => $chart,
         ]);

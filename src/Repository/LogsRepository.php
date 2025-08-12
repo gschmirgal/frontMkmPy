@@ -6,14 +6,27 @@ use App\Entity\Logs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+
+
 /**
  * @extends ServiceEntityRepository<Log>
  */
 class LogsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Logs::class);
+    }
+
+    public function paginateLogs( int $page, int $limit): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->createQueryBuilder('l')->orderBy('l.id', 'DESC'),
+            $page,
+            $limit
+        );
     }
 
     //    /**

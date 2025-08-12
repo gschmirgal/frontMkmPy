@@ -6,14 +6,29 @@ use App\Entity\Prices;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+
 /**
  * @extends ServiceEntityRepository<Prices>
  */
 class PricesRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Prices::class);
+    }
+
+    
+    public function paginatePrices( int $cardId, int $page, int $limit): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->createQueryBuilder('p')
+                ->andWhere('p.product = :cardId')
+                ->setParameter('cardId', $cardId),
+            $page,
+            $limit
+        );
     }
 
     //    /**

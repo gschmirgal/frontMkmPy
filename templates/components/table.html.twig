@@ -17,3 +17,7 @@
         {% endfor %}
     </tbody>
 </table>
+
+{% if addPaginationRender %}
+    {{ knp_pagination_render(addPaginationRender)}}
+{% endif %}

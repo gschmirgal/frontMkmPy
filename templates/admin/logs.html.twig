@@ -4,5 +4,5 @@
 
 {% block body %}
     <h1>{{script ~" script logs"}}</h1>
-    {{ component('table', {headers: tableColumns, rows: logs}) }}
+    {{ component('table', {headers: tableColumns, rows: logs, addPaginationRender: addPaginationRender}) }}
 {% endblock %}
