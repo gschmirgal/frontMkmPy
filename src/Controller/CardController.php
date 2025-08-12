@@ -40,7 +40,7 @@ class CardController extends AbstractController{
             'avg1'      => '1 days average',
             'avg7'      => '7 days average',
             'avg30'     => '30 days average',
-            'avgFoil'   => '1 day average foil',
+            'avgFoil'   => 'Average foil',
             'lowFoil'   => 'Lower foil',
             'trendFoil' => 'Trend Foil',
             'avg1Foil'  => '1 days average Foil',
