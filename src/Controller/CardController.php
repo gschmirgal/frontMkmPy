@@ -158,6 +158,15 @@ class CardController extends AbstractController{
 
         }
 
+        //on inverser l'ordre du graph
+        foreach( $dataGraph['datasets'] as $key => $dataSet ){
+            $dataGraph['datasets'][$key]['data'] = array_reverse( $dataSet['data'] );
+        
+        }
+
+        $dataGraph['labels'] = array_reverse( $dataGraph['labels'] );
+
+
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart->setData($dataGraph);
 

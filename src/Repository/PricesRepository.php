@@ -25,6 +25,7 @@ class PricesRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $this->createQueryBuilder('p')
                 ->andWhere('p.product = :cardId')
+                ->orderBy('p.id', 'DESC')
                 ->setParameter('cardId', $cardId),
             $page,
             $limit
