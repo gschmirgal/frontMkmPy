@@ -20,6 +20,17 @@ class SearchController extends AbstractController{
         $expansions = $repositoryExp->findByName($search);
         $cards      = $repositoryCards->findByNameUnique($search);
 
+        if( count($expansions) === 1 && count($cards) === 0 ){
+            return $this->redirectToRoute('expansion.cardlist', [
+                'id' => $expansions[0]->getId(),
+            ]);
+        }
+        if( count($cards) === 1 && count($expansions) === 0 ){
+            return $this->redirectToRoute('card.expansionlist', [
+                'id' => $cards[0]['id'],
+            ]);
+        }
+
         $expansionsList = [[
                 'type' => 'primary',
                 'content' => 'Expansions :',

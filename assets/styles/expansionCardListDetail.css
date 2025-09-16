@@ -1,11 +1,12 @@
 .card{
     width: 100%;
     height: auto;
-    max-width: 322px;
+    max-width: 350px;
 }
 
 .price-chart {
     width: 100% !important;
     height: auto !important;
     display: block;
+    min-width:350px;
 }

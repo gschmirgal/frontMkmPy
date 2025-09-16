@@ -76,6 +76,14 @@ class CardController extends AbstractController{
     {   
         $originalcard = $repositoryProd->find($id);
         $cards = $repositoryProd->findByMetaCardOrderByExpansionName($originalcard->getIdMetaCard());
+
+        if( count($cards) === 1 ){
+            return $this->redirectToRoute('card.cardlist.detail', [
+                'expansionid' => $cards[0]->getExpansion()->getId(),
+                'cardid' => $cards[0]->getId(),
+            ]);
+        }
+
         foreach( $cards as $card ){
             $img = "";
             if( $card->getScryfall()->first() !== false ){
