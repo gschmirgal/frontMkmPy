@@ -19,7 +19,9 @@ use Symfony\UX\Chartjs\Model\Chart;
 class ExpansionController extends AbstractController{
 
     #[Route('/expansions', name: 'expansion.list')]
-    function show (Request $request, ExpansionsRepository $repository ): Response 
+    function show (
+                Request $request, 
+                ExpansionsRepository $repository ): Response 
     {
         $expansions = $repository->findBy([], ['name' => 'ASC']);
 
@@ -45,10 +47,16 @@ class ExpansionController extends AbstractController{
     }
 
     #[Route('/expansion/{id}', name: 'expansion.cardlist', requirements: ['id' => '\d+'])]
-    function showCardsExpansion (Request $request, int $id, Packages $assets, ExpansionsRepository $repositoryExp, productsRepository $repositoryProd ): Response 
+    function showCardsExpansion (
+                            Request $request, 
+                            int $id, 
+                            Packages $assets, 
+                            ExpansionsRepository $repositoryExp, 
+                            ProductsRepository $repositoryProd ): Response 
     {   
         $expansion = $repositoryExp->find($id);
-        $cards = $repositoryProd->findBy(['expansion' => $id], ['name' => 'ASC']);
+        $cards = $repositoryProd->findByExpansionWithRelations($id);
+        
 
         $list = [];
         foreach( $cards as $card ){

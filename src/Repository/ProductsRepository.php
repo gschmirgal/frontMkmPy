@@ -47,6 +47,9 @@ class ProductsRepository extends ServiceEntityRepository
 
         }
 
+        /**
+         * @return Products[] Returns an array of Expansions objects
+         */
         public function findByMetaCardOrderByExpansionName(int $idMetaCard) : array
         {
             return $this->createQueryBuilder('p')
@@ -56,6 +59,23 @@ class ProductsRepository extends ServiceEntityRepository
                 ->where('p.idMetaCard = :idMetaCard')
                 ->setParameter('idMetaCard', $idMetaCard)
                 ->orderBy('e.name', 'ASC')
+                ->getQuery()
+                ->getResult();
+        }
+        
+        /**
+         * @return Products[] Returns an array of Products objects
+         */
+        public function findByExpansionWithRelations(int $expansionId): array
+        {
+            return $this->createQueryBuilder('p')
+                ->leftJoin('p.expansion', 'e')
+                ->addSelect('e')
+                ->leftJoin('p.scryfall', 's')
+                ->addSelect('s')
+                ->where('e.id = :expansionId')
+                ->setParameter('expansionId', $expansionId)
+                ->orderBy('p.name', 'ASC')
                 ->getQuery()
                 ->getResult();
         }

@@ -1,4 +1,4 @@
-.card{
+.card {
     width: 100%;
     height: auto;
     max-width: 350px;
@@ -8,5 +8,5 @@
     width: 100% !important;
     height: auto !important;
     display: block;
-    min-width:350px;
+    min-width: 350px;
 }

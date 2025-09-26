@@ -4,7 +4,5 @@
 
 {% block body %}
     <h1>{{expansion.name}}</h1>
-
-    
-    {{ component('list', {data: cards}) }}
+    {{ component('list_cards', {data: cards}) }}
 {% endblock %}
