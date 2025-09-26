@@ -14,10 +14,10 @@ class Logs
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTime $dateImport = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTime $dateImportFile = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
