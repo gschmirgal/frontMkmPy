@@ -5,7 +5,7 @@
             <div class="card img-max-250">
                 <a href="{{ path(card.route, card.routeParams) }}" class="stretched-link"></a>
                 {% if card.imgHover %}
-                    <img src="{{ card.imgHover }}" class="card-img-top img-fluid" alt="{{ card.content }}">
+                    <img src="{{ card.imgHover }}" class="card-img-top img-fluid rounded-10" alt="{{ card.content }}">
                 {% endif %}
                 <div class="card-body">
                     <p class="card-text text-center">{{ card.content }}</p>

@@ -6,3 +6,7 @@
     max-width: 37px;
     max-height: 37px;
 }
+
+.rounded-10 {
+    border-radius: 10px !important;
+}

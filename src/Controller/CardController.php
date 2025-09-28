@@ -115,7 +115,7 @@ class CardController extends AbstractController{
         foreach( $cards as $card ){
             $img = "";
             if( $card->getScryfall()->first() !== false ){
-                $img = $card->getScryfall()->first()->getImgPngUri();
+                $img = $card->getScryfall()->first()->getImgNormalUri();
             }
             if( !$img ){
                 $img = $assets->getUrl('img/no_card.png');
@@ -165,10 +165,7 @@ class CardController extends AbstractController{
 
         // Récupération de l'illustration de la carte
         $scryfall = $card->getScryfall()->first(); // On prend la première image disponible
-        $cardArt = $scryfall ? $scryfall->getImgPngUri() : "";
-        if(!$cardArt){
-            $cardArt = $assets->getUrl('img/no_card.png');
-        }
+        $cardArt = $scryfall ? $scryfall->getImgPngUri() : $assets->getUrl('img/no_card.png');
 
         $data = [];
         $tableData = [];

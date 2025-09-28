@@ -62,7 +62,7 @@ class ExpansionController extends AbstractController{
         foreach( $cards as $card ){
             $img = "";
             if( $card->getScryfall()->first() !== false ){
-                $img = $card->getScryfall()->first()->getImgPngUri();
+                $img = $card->getScryfall()->first()->getImgNormalUri();
             }
             if( !$img ){
                 $img = $assets->getUrl('img/no_card.png');
