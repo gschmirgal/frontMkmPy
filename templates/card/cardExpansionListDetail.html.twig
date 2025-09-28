@@ -9,7 +9,7 @@
     <h1><a href="{{ path('card.expansionlist', {id: card.id })}}">{{ card.name }}</a> - <a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a></h1>
     <div class="row align-items-center">
             <div class="col-12 col-md-auto text-center d-print-none">
-                <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid mb-3 card mx-auto d-block">
+                <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid mb-3 bigmtgcard mx-auto d-block">
             </div>
         <div class="col">
             {{ render_chart(chart,{'class': 'price-chart'}) }}

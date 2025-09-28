@@ -20,9 +20,9 @@ use Symfony\UX\Chartjs\Model\Chart;
 // Contrôleur principal pour la gestion des cartes
 class CardController extends AbstractController{
     // Liste des clés pour les datasets historiques du graphique
-    private array $graphlist = ['avg1', 'avg1Foil'];
+    private array $graphlist = [ 0 => 'avg1', 2 => 'avg1Foil'];
     // Liste des clés pour les datasets de prédiction du graphique
-    private array $graphlistpredict = ['avg1Predict', 'avg1FoilPredict'];
+    private array $graphlistpredict = [1 => 'avg1Predict', 3 => 'avg1FoilPredict'];
     // Styles des courbes pour Chart.js (couleurs, dash, etc.)
     private array $graphStyle = [
             'avg1' => [
@@ -181,7 +181,7 @@ class CardController extends AbstractController{
                     $dataGraph['datasets'][$index] = $this->graphStyle[$key];
                     //initialisation ici de la courbe de prédiction associée
                     //permet de donner l'impression que les courbes se suivent
-                    $dataGraph['datasets'][$index + count($this->graphlist)] = 
+                    $dataGraph['datasets'][$index + 1] = 
                         $this->graphStyle[$key."Predict"] +
                         ["data" => [$date => $price->{"get".$key}()]];
                     
@@ -215,10 +215,10 @@ class CardController extends AbstractController{
         }
 
         foreach( $this->graphlist as $index =>$key ){
-            // Si aucune donnée pour une courbe, on la supprime
+            // Si aucune donnée pour une courbe, on la supprime (ainsi que sa prédiction associée)
             if( !isset($flagDataGraph[$key]) ){
                 unset( $dataGraph['datasets'][$index] );
-                unset( $dataGraph['datasets'][$index + count($this->graphlist)] );
+                unset( $dataGraph['datasets'][$index + 1] );
             }
         }
 
@@ -236,8 +236,8 @@ class CardController extends AbstractController{
             $date = $price->getDate()->format('Y-m-d');
             $dataGraph['labels'][] = $date;
             foreach( $this->graphlistpredict as $index =>$key ){
-                if( isset( $dataGraph['datasets'][$index + count($this->graphlist)] ))
-                    $dataGraph['datasets'][$index + count($this->graphlist)]['data'][$date] = $price->{"get".str_replace('Predict','',$key)}();
+                if( isset( $dataGraph['datasets'][$index] ))
+                    $dataGraph['datasets'][$index]['data'][$date] = $price->{"get".str_replace('Predict','',$key)}();
             }
         }
 
