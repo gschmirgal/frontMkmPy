@@ -252,6 +252,7 @@ class CardController extends AbstractController{
         // Rendu de la page avec le graphique et le tableau
         return $this->render('card/cardExpansionListDetail.html.twig', [
             'expansion' => $expansion,
+            'cardId' => $cardid,
             'cardArt' => $cardArt,
             'card' => $card,
             'prices' => $tableData,

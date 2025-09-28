@@ -15,6 +15,8 @@
             {{ render_chart(chart,{'class': 'price-chart'}) }}
         </div>
     </div>
+    <a href="https://www.cardmarket.com/en/Magic/Products?idProduct={{ cardId }}" target="_blank" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Buy on CardMarket</a>
+    <a href="https://www.cardmarket.com/en/Magic/Products?idProduct={{ cardId }}&isFoil=Y" target="_blank" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Buy Foil on CardMarket</a>
     {{ component('table', {headers: headerstable, rows: prices, addPaginationRender: addPaginationRender}) }}
 
 {% endblock %}
