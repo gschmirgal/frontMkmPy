@@ -14,3 +14,14 @@
 ul.pagination {
     margin-top: 1rem;
 }
+
+.expansion-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+}
+
+/* Ou avec Bootstrap dark mode */
+[data-bs-theme="dark"] .expansion-icon {
+    filter: invert(1);
+}

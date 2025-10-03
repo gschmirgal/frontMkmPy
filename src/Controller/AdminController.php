@@ -46,9 +46,9 @@ class AdminController extends AbstractController{
                 if (method_exists($log, $getter)) {
                     $value = $log->$getter();
                     if (in_array($col, ['dateImport', 'dateImportFile'])) {
-                        $value = $value->format('Y-m-d H:i:s');
+                        $value = $value?->format('Y-m-d H:i:s');
                     }elseif (in_array($col, ['dateData'])) {
-                        $value = $value->format('Y-m-d');
+                        $value = $value?->format('Y-m-d');
                     }
 
                 } elseif ($col === 'status') {
@@ -95,7 +95,7 @@ class AdminController extends AbstractController{
                 }elseif (method_exists($log, $getter)) {
                     $value = $log->$getter();
                     if (in_array($col, ['date'])) {
-                        $value = $value->format('Y-m-d H:i:s');
+                        $value = $value?->format('Y-m-d H:i:s');
                     }
 
                 } else {

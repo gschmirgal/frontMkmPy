@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Packages;
 
 use App\Repository\ExpansionsRepository;
+use App\Repository\ExpansionsMatchingRepository;
 use App\Repository\ProductsRepository;
 use App\Repository\PricesRepository;
 
@@ -21,15 +22,21 @@ class ExpansionController extends AbstractController{
     #[Route('/expansions', name: 'expansion.list')]
     function show (
                 Request $request, 
-                ExpansionsRepository $repository ): Response 
+                Packages $assets, 
+                ExpansionsRepository $repository,
+                ExpansionsMatchingRepository $repositoryMatch
+            ): Response 
     {
         $expansions = $repository->findBy([], ['name' => 'ASC']);
+        $expansions2 = $repositoryMatch->getAllMatchingIcons();
+
 
         $list = [];
         foreach( $expansions as $expansion ){
             $list[] = [
-                'type' => 'link',
+                'type' => 'icon_link',
                 'content' => $expansion->getName(),
+                'icon' => $expansions2[$expansion->getId()] ?? $assets->getUrl('img/missing_icon.svg'),
                 'route' => 'expansion.cardlist',
                 'routeParams' => [
                     'id' => $expansion->getId(),
@@ -38,11 +45,6 @@ class ExpansionController extends AbstractController{
         }
         return $this->render('expansion/expansionList.html.twig', [
             'expansions' => $list,
-        ]);
-
-
-        return $this->render('expansion/expansionList.html.twig', [
-            'expansions' => $expansions,
         ]);
     }
 

@@ -18,6 +18,11 @@
             <a class="list-group-item list-group-item-action{{classSupp}}" 
             href="{{ path(d.route, d.routeParams) }}" 
             {{ imgHover }}>{{ d.content }}</a>
+        {% elseif d.type == "icon_link" %}
+            <a class="list-group-item list-group-item-action {{classSupp}}" href="{{ path(d.route, d.routeParams) }}">
+            <img src="{{ d.icon }}" class="card-img-top img-fluid icon expansion-icon" alt="{{ d.content }}">
+            {{ d.content }}
+            </a>
         {% endif %}
 
     {% endfor %}
