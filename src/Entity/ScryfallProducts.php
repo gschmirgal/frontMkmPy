@@ -46,7 +46,7 @@ class ScryfallProducts
     #[ORM\ManyToOne(inversedBy: 'scryfall')]
     private ?Products $cardMarketId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'scryfall')]
+    #[ORM\ManyToOne]
     private ?ScryfallExpansions $scryfallExpansion = null;
 
     public function getId(): string
@@ -71,14 +71,14 @@ class ScryfallProducts
         return $this;
     }
 
-    public function getScryfallUri(): ?string
+    public function getGathererUri(): ?string
     {
-        return $this->scryfallUri;
+        return $this->gathererUri;
     }
 
-    public function setScryfallUri(?string $scryfallUri): static
+    public function setGathererUri(?string $gathererUri): static
     {
-        $this->scryfallUri = $scryfallUri;
+        $this->gathererUri = $gathererUri;
         return $this;
     }
 

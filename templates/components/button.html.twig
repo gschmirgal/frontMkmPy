@@ -1,0 +1,16 @@
+{# templates/components/button.html.twig #}
+
+{% if disabled or not link %}
+    {% set active = "disabled" %}
+{% else %}
+    {% set active = "active" %}
+
+{% endif %}
+
+
+{% if not btnType %}
+    {% set btnType = "btn-primary" %}
+
+{% endif %}
+
+<a href="{{link}}" target="_blank" class="btn {{btnType}} {{active}}" role="button" aria-pressed="true">{{text}}</a>

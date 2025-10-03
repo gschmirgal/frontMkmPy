@@ -165,7 +165,8 @@ class CardController extends AbstractController{
 
         // Récupération de l'illustration de la carte
         $scryfall = $card->getScryfall()->first(); // On prend la première image disponible
-        $cardArt = $scryfall ? $scryfall->getImgPngUri() : $assets->getUrl('img/no_card.png');
+        $cardArt        = $scryfall ? $scryfall->getImgPngUri() : $assets->getUrl('img/no_card.png');
+        $gatherer_uri   = $scryfall ? $scryfall->getGathererUri() : "";
 
         $data = [];
         $tableData = [];
@@ -253,6 +254,8 @@ class CardController extends AbstractController{
         return $this->render('card/cardExpansionListDetail.html.twig', [
             'expansion' => $expansion,
             'cardId' => $cardid,
+            'scryfalldId' => $scryfall_id,
+            'gathereruri' => $gatherer_uri,
             'cardArt' => $cardArt,
             'card' => $card,
             'prices' => $tableData,
