@@ -255,7 +255,7 @@ class CardController extends AbstractController{
         return $this->render('card/cardExpansionListDetail.html.twig', [
             'expansion' => $expansion,
             'cardId' => $cardid,
-            'scryfalldId' => $scryfall_id,
+            'scryfalluri' => $scryfall_uri,
             'gathereruri' => $gatherer_uri,
             'cardArt' => $cardArt,
             'card' => $card,
