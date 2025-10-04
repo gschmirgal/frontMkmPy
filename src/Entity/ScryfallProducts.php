@@ -31,7 +31,7 @@ class ScryfallProducts
     #[ORM\Column(length: 255)]
     private ?string $imgPngUriBack = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $collectorNumber = null;
 
     #[ORM\Column(length: 10)]
@@ -137,6 +137,72 @@ class ScryfallProducts
     public function setCardMarketId(?Products $cardMarketId): static
     {
         $this->cardMarketId = $cardMarketId;
+        return $this;
+    }
+
+    public function getCollectorNumber(): ?string
+    {
+        return $this->collectorNumber;
+    }
+
+    public function setCollectorNumber(?string $collectorNumber): static
+    {
+        $this->collectorNumber = $collectorNumber;
+        return $this;
+    }
+
+    public function getRarity(): ?string
+    {
+        return $this->rarity;
+    }
+
+    public function setRarity(?string $rarity): static
+    {
+        $this->rarity = $rarity;
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): static
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getImgNormalUriBack(): ?string
+    {
+        return $this->imgNormalUriBack;
+    }
+
+    public function setImgNormalUriBack(?string $imgNormalUriBack): static
+    {
+        $this->imgNormalUriBack = $imgNormalUriBack;
+        return $this;
+    }
+
+    public function getImgPngUriBack(): ?string
+    {
+        return $this->imgPngUriBack;
+    }
+
+    public function setImgPngUriBack(?string $imgPngUriBack): static
+    {
+        $this->imgPngUriBack = $imgPngUriBack;
+        return $this;
+    }
+
+    public function getScryfallExpansion(): ?ScryfallExpansions
+    {
+        return $this->scryfallExpansion;
+    }
+
+    public function setScryfallExpansion(?ScryfallExpansions $scryfallExpansion): static
+    {
+        $this->scryfallExpansion = $scryfallExpansion;
         return $this;
     }
 }

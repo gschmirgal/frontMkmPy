@@ -68,16 +68,55 @@ class ProductsRepository extends ServiceEntityRepository
          */
         public function findByExpansionWithRelations(int $expansionId): array
         {
-            return $this->createQueryBuilder('p')
+            // Récupérer les IDs dans l'ordre souhaité avec SQL natif
+            $conn = $this->getEntityManager()->getConnection();
+            
+            $sql = "
+                SELECT p.id
+                FROM products p
+                LEFT JOIN expansions e ON p.idExpansion = e.id
+                LEFT JOIN scryfall_products s ON s.card_market_id_id = p.id
+                WHERE e.id = :expansionId
+                ORDER BY 
+                    CAST(COALESCE(s.collector_number, '9999') AS UNSIGNED) ASC,
+                    s.collector_number ASC,
+                    p.name ASC
+            ";
+            
+            $stmt = $conn->prepare($sql);
+            $result = $stmt->executeQuery(['expansionId' => $expansionId]);
+            $productIds = array_column($result->fetchAllAssociative(), 'id');
+            
+            if (empty($productIds)) {
+                return [];
+            }
+            
+            // Récupérer les objets Products avec leurs relations
+            $products = $this->createQueryBuilder('p')
                 ->leftJoin('p.expansion', 'e')
                 ->addSelect('e')
                 ->leftJoin('p.scryfall', 's')
                 ->addSelect('s')
-                ->where('e.id = :expansionId')
-                ->setParameter('expansionId', $expansionId)
-                ->orderBy('p.name', 'ASC')
+                ->where('p.id IN (:productIds)')
+                ->setParameter('productIds', $productIds)
                 ->getQuery()
                 ->getResult();
+            
+            // Réorganiser selon l'ordre SQL
+            $orderedProducts = [];
+            $productsById = [];
+            
+            foreach ($products as $product) {
+                $productsById[$product->getId()] = $product;
+            }
+            
+            foreach ($productIds as $id) {
+                if (isset($productsById[$id])) {
+                    $orderedProducts[] = $productsById[$id];
+                }
+            }
+            
+            return $orderedProducts;
         }
 
     //    /**
