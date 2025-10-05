@@ -66,10 +66,27 @@ class ProductsRepository extends ServiceEntityRepository
         /**
          * @return Products[] Returns an array of Products objects
          */
-        public function findByExpansionWithRelations(int $expansionId): array
+        public function findByExpansionWithRelations(int $expansionId, string $sortBy="collector_number"): array
         {
             // Récupérer les IDs dans l'ordre souhaité avec SQL natif
             $conn = $this->getEntityManager()->getConnection();
+
+            switch ($sortBy) {
+                case 'name_asc':
+                    $orderBy = 'p.name ASC';
+                    break;
+                case 'name_desc':
+                    $orderBy = 'p.name DESC';
+                    break;
+                case 'collector_number':
+                default:
+                    $orderBy = "
+                        CAST(COALESCE(s.collector_number, '9999') AS UNSIGNED) ASC,
+                        s.collector_number ASC,
+                        p.name ASC
+                    ";
+                    break;
+            }
             
             $sql = "
                 SELECT p.id
@@ -78,9 +95,7 @@ class ProductsRepository extends ServiceEntityRepository
                 LEFT JOIN scryfall_products s ON s.card_market_id_id = p.id
                 WHERE e.id = :expansionId
                 ORDER BY 
-                    CAST(COALESCE(s.collector_number, '9999') AS UNSIGNED) ASC,
-                    s.collector_number ASC,
-                    p.name ASC
+                    $orderBy
             ";
             
             $stmt = $conn->prepare($sql);

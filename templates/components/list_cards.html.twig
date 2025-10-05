@@ -1,7 +1,6 @@
-{# templates/components/list_cards.html.twig #}
 <div class="row row-cols-2 row-cols-md-6 g-3">
     {% for card in data %}
-        <div class="col">
+        <div class="col" data-collector-number="{{ card.collectorNumber ?? '9999' }}" data-card-name="{{ card.content }}">
             <div class="card img-max-250">
                 <a href="{{ path(card.route, card.routeParams) }}" class="stretched-link"></a>
                 {% if card.imgHover %}

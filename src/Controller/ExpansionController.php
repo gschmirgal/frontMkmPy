@@ -57,7 +57,9 @@ class ExpansionController extends AbstractController{
                             ProductsRepository $repositoryProd ): Response 
     {   
         $expansion = $repositoryExp->find($id);
-        $cards = $repositoryProd->findByExpansionWithRelations($id);
+
+        // Récupérer les cartes sans tri spécifique (ordre par défaut)
+        $cards = $repositoryProd->findByExpansionWithRelations($id, 'collector_number');
         
 
         $list = [];
@@ -69,6 +71,11 @@ class ExpansionController extends AbstractController{
             if( !$img ){
                 $img = $assets->getUrl('img/no_card.png');
             }
+            $collectorNumber = null;
+            if( $card->getScryfall()->first() !== false ){
+                $collectorNumber = $card->getScryfall()->first()->getCollectorNumber();
+            }
+            
             $list[] = [
                 'type' => 'link',
                 'content' => $card->getName(),
@@ -78,6 +85,7 @@ class ExpansionController extends AbstractController{
                     'expansionid' => $expansion->getId(),
                     'cardid' => $card->getId(),
                 ],
+                'collectorNumber' => $collectorNumber,
             ];
         }
         return $this->render('expansion/expansionCardList.html.twig', [
