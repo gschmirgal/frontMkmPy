@@ -10,3 +10,31 @@
     display: block;
     min-width: 350px;
 }
+
+/* Animation de transition pour le flip */
+#cardImage {
+    transition: all 0.4s ease-in-out;
+}
+
+#cardImage.flipping {
+    opacity: 0;
+    transform: scale(0.98);
+}
+
+/* Bouton flottant sur la carte */
+
+#flipBtn {
+    padding: 0;
+    bottom: -1rem;
+    left: 50%;
+    width: 2rem;
+    height: 2rem;
+    transform: translateX(-50%);
+    transition: all 0.8s ease-in-out;
+    z-index: 10;
+}
+
+#flipBtn:hover {
+    transform: translateX(-50%) rotate(180deg);
+    transition: all 0.8s ease-in-out;
+}

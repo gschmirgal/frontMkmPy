@@ -9,7 +9,14 @@
     <h1><a href="{{ path('card.expansionlist', {id: card.id })}}">{{ card.name }}</a> - <a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a></h1>
     <div class="row align-items-center">
             <div class="col-12 col-md-auto text-center d-print-none">
-                <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid mb-3 bigmtgcard mx-auto d-block">
+                <div class="position-relative d-inline-block my-4">
+                    <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid bigmtgcard" onclick="flipCard()" id="cardImage">
+                    {% if cardArtBack %}
+                        <button class="btn btn-sm btn-outline-primary position-absolute btn-light rounded-circle" onclick="flipCard()" id="flipBtn" >
+                            <i class="bi bi-arrow-clockwise h4"></i>
+                        </button>
+                    {% endif %}
+                </div>
             </div>
         <div class="col">
             {{ render_chart(chart,{'class': 'price-chart'}) }}
@@ -24,3 +31,37 @@
 
     
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if cardArtBack %}
+    <script>
+        const images = ['{{ cardArt }}', '{{ cardArtBack }}'];
+        let current = 0;
+        let isFlipping = false;
+        
+        function flipCard() {
+            if (isFlipping) return; // Éviter les clics multiples
+            
+            isFlipping = true;
+            const cardImage = document.getElementById('cardImage');
+            
+            // Animation de sortie de l'image seulement
+            cardImage.classList.add('flipping');
+            
+            // Changer l'image après l'animation de sortie
+            setTimeout(() => {
+                current = current === 0 ? 1 : 0;
+                cardImage.src = images[current];
+                
+                // Animation d'entrée
+                setTimeout(() => {
+                    cardImage.classList.remove('flipping');
+                    isFlipping = false;
+                }, 50); // Petit délai pour que l'image se charge
+            }, 200); // Moitié de la durée de la transition CSS (400ms)
+        }
+    </script>
+    {% endif %}
+{% endblock %}
+

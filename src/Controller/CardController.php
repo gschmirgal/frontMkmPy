@@ -166,6 +166,7 @@ class CardController extends AbstractController{
         // Récupération de l'illustration de la carte
         $scryfall = $card->getScryfall()->first(); // On prend la première image disponible
         $cardArt        = $scryfall ? $scryfall->getImgPngUri() : $assets->getUrl('img/no_card.png');
+        $cardArtBack    = $scryfall ? $scryfall->getImgPngUriBack() : null;
         $gatherer_uri   = $scryfall ? $scryfall->getGathererUri() : "";
         $scryfall_uri   = $scryfall ? $scryfall->getScryfallUri() : "";
 
@@ -258,6 +259,7 @@ class CardController extends AbstractController{
             'scryfalluri' => $scryfall_uri,
             'gathereruri' => $gatherer_uri,
             'cardArt' => $cardArt,
+            'cardArtBack' => $cardArtBack,
             'card' => $card,
             'prices' => $tableData,
             'headerstable' => array_values($this->tableColumns),
