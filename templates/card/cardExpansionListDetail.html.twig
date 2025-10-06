@@ -10,7 +10,7 @@
     <div class="row align-items-center">
             <div class="col-12 col-md-auto text-center d-print-none">
                 <div class="position-relative d-inline-block my-4">
-                    <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid bigmtgcard" onclick="flipCard()" id="cardImage">
+                    <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid bigmtgcard" onclick="flipCard()" id="cardImage" data-front="{{ cardArt }}" data-back="{{ cardArtBack|default('') }}" data-showing="front">
                     {% if cardArtBack %}
                         <button class="btn btn-sm btn-outline-primary position-absolute btn-light rounded-circle" onclick="flipCard()" id="flipBtn" >
                             <i class="bi bi-arrow-clockwise h4"></i>
@@ -36,30 +36,62 @@
     {{ parent() }}
     {% if cardArtBack %}
     <script>
-        const images = ['{{ cardArt }}', '{{ cardArtBack }}'];
-        let current = 0;
         let isFlipping = false;
+        let preloadImage = null;
+        
+        // Réinitialiser au chargement de la page
+        document.addEventListener('turbo:load', function() {
+            resetCardImage();
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            resetCardImage();
+        });
+        
+        function resetCardImage() {
+            const cardImage = document.getElementById('cardImage');
+            if (cardImage) {
+                // Remettre sur la face avant
+                cardImage.src = cardImage.dataset.front;
+                cardImage.dataset.showing = 'front';
+                cardImage.classList.remove('flipping');
+                isFlipping = false;
+                
+                // Précharger l'image arrière
+                if (cardImage.dataset.back && !preloadImage) {
+                    preloadImage = new Image();
+                    preloadImage.src = cardImage.dataset.back;
+                }
+            }
+        }
         
         function flipCard() {
-            if (isFlipping) return; // Éviter les clics multiples
+            if (isFlipping) return;
+            
+            const cardImage = document.getElementById('cardImage');
+            if (!cardImage || !cardImage.dataset.back) return;
             
             isFlipping = true;
-            const cardImage = document.getElementById('cardImage');
             
-            // Animation de sortie de l'image seulement
+            // Animation de sortie
             cardImage.classList.add('flipping');
             
-            // Changer l'image après l'animation de sortie
             setTimeout(() => {
-                current = current === 0 ? 1 : 0;
-                cardImage.src = images[current];
+                // Changer l'image
+                if (cardImage.dataset.showing === 'front') {
+                    cardImage.src = cardImage.dataset.back;
+                    cardImage.dataset.showing = 'back';
+                } else {
+                    cardImage.src = cardImage.dataset.front;
+                    cardImage.dataset.showing = 'front';
+                }
                 
                 // Animation d'entrée
                 setTimeout(() => {
                     cardImage.classList.remove('flipping');
                     isFlipping = false;
-                }, 50); // Petit délai pour que l'image se charge
-            }, 200); // Moitié de la durée de la transition CSS (400ms)
+                }, 50);
+            }, 200);
         }
     </script>
     {% endif %}

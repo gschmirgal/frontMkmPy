@@ -13,7 +13,7 @@
 
 /* Animation de transition pour le flip */
 #cardImage {
-    transition: all 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
 }
 
 #cardImage.flipping {
