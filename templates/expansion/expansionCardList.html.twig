@@ -90,8 +90,8 @@
             });
         }
         
-        // Restaurer le choix au chargement
-        document.addEventListener('DOMContentLoaded', function() {
+        // Fonction d'initialisation commune
+        function initializeSorting() {
             // Configurer les listeners d'événements
             setupSortListeners();
             
@@ -110,6 +110,16 @@
                     defaultRadio.checked = true;
                 }
             }
+        }
+        
+        // Restaurer le choix au chargement (compatible Turbo)
+        document.addEventListener('turbo:load', function() {
+            initializeSorting();
+        });
+        
+        // Fallback pour les navigateurs sans Turbo
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSorting();
         });
     </script>
 {% endblock %}
