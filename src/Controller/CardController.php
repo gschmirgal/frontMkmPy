@@ -255,6 +255,8 @@ class CardController extends AbstractController{
         // Rendu de la page avec le graphique et le tableau
         return $this->render('card/cardExpansionListDetail.html.twig', [
             'expansion' => $expansion,
+            'exporterPath' => 'export.card.prices',
+            'exporterParams' => ['cardid' => $cardid],
             'cardId' => $cardid,
             'scryfalluri' => $scryfall_uri,
             'gathereruri' => $gatherer_uri,

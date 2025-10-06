@@ -67,6 +67,7 @@ class AdminController extends AbstractController{
             'tableColumns' => array_values($this->tableColumns),
             'script' => 'MKM.py',
             'logs' => $tableData,
+            'exporterPath' => 'export.log',
             'addPaginationRender' => $logs,           
         ]);
     }
@@ -112,6 +113,7 @@ class AdminController extends AbstractController{
             'tableColumns' => array_values($this->tableOracleColumns),
             'script' => 'MKM Oracle Py',
             'logs' => $tableData,
+            'exporterPath' => 'export.logoracle',
             'addPaginationRender' => $logs,           
         ]);
     }

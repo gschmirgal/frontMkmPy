@@ -1,8 +1,32 @@
 {# templates/components/table.html.twig #}
 
-{% if addPaginationRender %}
-    {{ knp_pagination_render(addPaginationRender)}}
-{% endif %}
+<div class="d-flex justify-content-between align-items-center">
+    {% if addPaginationRender and  addPaginationRender.totalItemCount > addPaginationRender.itemNumberPerPage %}
+        {{ knp_pagination_render(addPaginationRender) }}
+    {% else %}
+        <div></div>
+    {% endif %}
+    
+    {% if exporterPath is defined and exporterPath is not empty %}
+        <div class="btn-group mb-1">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-download"></i> Export
+            </button>
+            <ul class="dropdown-menu">
+                {% set baseExporterParams = exporterParams|default({}) %}
+                
+                {% if addPaginationRender.totalItemCount > addPaginationRender.itemNumberPerPage %}
+                    {% set allParams = baseExporterParams|merge({'mode': 'page', 'page': addPaginationRender.currentPageNumber, 'offset': addPaginationRender.itemNumberPerPage}) %}
+                    <li><a class="dropdown-item" href="{{ path(exporterPath, allParams) }}"><i class="bi bi-book-half"></i> This page</a></li>
+                {% endif %} 
+                
+                {% set allParams = baseExporterParams|merge({'mode': 'all'}) %}
+                <li><a class="dropdown-item" href="{{ path(exporterPath, allParams) }}"><i class="bi bi-book-fill"></i> All pages</a></li>
+            </ul>
+        </div>
+
+    {% endif %}
+</div>
 <div class="table-responsive overflow-auto">
     <table class="table table-striped table-hover table-bordered mb-0">
         <thead>

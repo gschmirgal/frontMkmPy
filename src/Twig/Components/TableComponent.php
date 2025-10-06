@@ -11,4 +11,6 @@ class TableComponent
     public array $headers = [];
     public array $rows = [];
     public ?SlidingPagination $addPaginationRender = null;
+    public ?string $exporterPath = null;
+    public ?array $exporterParams = [];
 }
