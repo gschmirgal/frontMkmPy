@@ -35,65 +35,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% if cardArtBack %}
-    <script>
-        let isFlipping = false;
-        let preloadImage = null;
-        
-        // Réinitialiser au chargement de la page
-        document.addEventListener('turbo:load', function() {
-            resetCardImage();
-        });
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            resetCardImage();
-        });
-        
-        function resetCardImage() {
-            const cardImage = document.getElementById('cardImage');
-            if (cardImage) {
-                // Remettre sur la face avant
-                cardImage.src = cardImage.dataset.front;
-                cardImage.dataset.showing = 'front';
-                cardImage.classList.remove('flipping');
-                isFlipping = false;
-                
-                // Précharger l'image arrière
-                if (cardImage.dataset.back && !preloadImage) {
-                    preloadImage = new Image();
-                    preloadImage.src = cardImage.dataset.back;
-                }
-            }
-        }
-        
-        function flipCard() {
-            if (isFlipping) return;
-            
-            const cardImage = document.getElementById('cardImage');
-            if (!cardImage || !cardImage.dataset.back) return;
-            
-            isFlipping = true;
-            
-            // Animation de sortie
-            cardImage.classList.add('flipping');
-            
-            setTimeout(() => {
-                // Changer l'image
-                if (cardImage.dataset.showing === 'front') {
-                    cardImage.src = cardImage.dataset.back;
-                    cardImage.dataset.showing = 'back';
-                } else {
-                    cardImage.src = cardImage.dataset.front;
-                    cardImage.dataset.showing = 'front';
-                }
-                
-                // Animation d'entrée
-                setTimeout(() => {
-                    cardImage.classList.remove('flipping');
-                    isFlipping = false;
-                }, 50);
-            }, 200);
-        }
-    </script>
+    <script src="{{ asset('js/cardFlip.js') }}"></script>
     {% endif %}
 {% endblock %}
 
