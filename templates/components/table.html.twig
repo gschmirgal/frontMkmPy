@@ -4,13 +4,13 @@
     {% if addPaginationRender and  addPaginationRender.totalItemCount > addPaginationRender.itemNumberPerPage %}
         {{ knp_pagination_render(addPaginationRender) }}
     {% else %}
-        <div></div>
+        <div><!--pour garder l'export a droite si une seule page --></div>
     {% endif %}
     
     {% if exporterPath is defined and exporterPath is not empty %}
         <div class="btn-group mb-1">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-download"></i> Export
+                <i class="bi bi-download"></i><span class="d-none d-sm-inline"> Export</span>
             </button>
             <ul class="dropdown-menu">
                 {% set baseExporterParams = exporterParams|default({}) %}
