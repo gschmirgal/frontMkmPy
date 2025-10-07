@@ -2,7 +2,7 @@
 
 <div class="d-flex justify-content-between align-items-center">
     {% if addPaginationRender and  addPaginationRender.totalItemCount > addPaginationRender.itemNumberPerPage %}
-        {{ knp_pagination_render(addPaginationRender) }}
+        {{ knp_pagination_render(addPaginationRender, 'pagination/compact_pagination.html.twig') }}
     {% else %}
         <div><!--pour garder l'export a droite si une seule page --></div>
     {% endif %}
@@ -48,5 +48,5 @@
     </table>
 </div>
 {% if addPaginationRender %}
-    {{ knp_pagination_render(addPaginationRender)}}
+    {{ knp_pagination_render(addPaginationRender, 'pagination/compact_pagination.html.twig') }}
 {% endif %}

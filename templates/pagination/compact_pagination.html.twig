@@ -1,0 +1,43 @@
+{# templates/pagination/compact_pagination.html.twig #}
+{% if pageCount > 1 %}
+<nav aria-label="Pagination" class="d-flex justify-content-between align-items-center gap-2">
+    {# Navigation précédent/suivant #}
+    <div class="pagination-nav d-flex gap-2">
+        {% if previous is defined %}
+            <a class="btn btn-primary btn-sm" href="{{ path(route, knp_pagination_query(query, previous, options)) }}" rel="prev">
+                <i class="bi bi-chevron-left"></i>
+                <span class="d-none d-md-inline ms-1">{{ 'pagination.previous'|trans }}</span>
+            </a>
+        {% else %}
+            <button class="btn btn-secondary btn-sm" disabled>
+                <i class="bi bi-chevron-left"></i>
+                <span class="d-none d-md-inline ms-1">{{ 'pagination.previous'|trans }}</span>
+            </button>
+        {% endif %}
+
+        {% if next is defined %}
+            <a class="btn btn-primary btn-sm" href="{{ path(route, knp_pagination_query(query, next, options)) }}" rel="next">
+                <span class="d-none d-md-inline me-1">{{ 'pagination.next'|trans }}</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        {% else %}
+            <button class="btn btn-secondary btn-sm" disabled>
+                <span class="d-none d-md-inline me-1">{{ 'pagination.next'|trans }}</span>
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        {% endif %}
+    </div>
+
+    {# Informations sur la page #}
+    <div class="pagination-info text-center justify-content-center">
+        <span class="badge bg-primary-subtle text-primary-emphasis">
+            {{ current }} / {{ pageCount }}
+        </span>
+        <small>
+            {% if totalCount is defined %}
+                ({{ totalCount }} {{ 'pagination.items'|trans }})
+            {% endif %}
+        </small>
+    </div>
+</nav>
+{% endif %}

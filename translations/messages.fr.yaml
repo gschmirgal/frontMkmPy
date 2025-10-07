@@ -118,3 +118,10 @@ home:
     recent_expansions: "Dernières Éditions"
     view_all: "Voir Tout"
     view_cards: "Voir les Cartes"
+
+pagination:
+    previous: "Précédent"
+    next: "Suivant"
+    current: "page actuelle"
+    showing: "Affichage de %from% à %to% sur %total% résultats"
+    items: "éléments"

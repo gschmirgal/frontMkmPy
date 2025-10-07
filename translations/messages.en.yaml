@@ -118,3 +118,10 @@ home:
     recent_expansions: "Latest Sets"
     view_all: "View All"
     view_cards: "View Cards"
+
+pagination:
+    previous: "Previous"
+    next: "Next"
+    current: "current page"
+    showing: "Showing %from% to %to% of %total% results"
+    items: "items"
