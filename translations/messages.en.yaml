@@ -102,7 +102,7 @@ home:
     ai_description: "The Python AI script for price prediction"
     personal_links: "Connect with me"
     portfolio: "Portfolio"
-    card: "Card"
+    cards: "Cards"
     stats:
         expansions: "Sets tracked"
         cards: "Cards monitored"

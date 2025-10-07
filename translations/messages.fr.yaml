@@ -102,7 +102,7 @@ home:
     ai_description: "Le script Python d'IA pour la prédiction des prix"
     personal_links: "Me contacter"
     portfolio: "Portfolio"
-    card: "Carte"
+    cards: "Cartes"
     stats:
         expansions: "Éditions suivies"
         cards: "Cartes surveillées"
