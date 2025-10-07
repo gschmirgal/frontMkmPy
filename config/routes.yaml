@@ -1,5 +1,19 @@
-controllers:
+# Routes avec locale
+controllers_with_locale:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+    prefix: '/{_locale}'
+    requirements:
+        _locale: 'en|fr'
+    defaults:
+        _locale: 'en'
+
+# Route par défaut qui redirige vers /en
+default_locale:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    defaults:
+        route: 'home'
+        _locale: 'en'

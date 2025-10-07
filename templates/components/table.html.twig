@@ -10,18 +10,18 @@
     {% if exporterPath is defined and exporterPath is not empty %}
         <div class="btn-group mb-1">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-download"></i><span class="d-none d-sm-inline"> Export</span>
+                <i class="bi bi-download"></i><span class="d-none d-sm-inline"> {{ 'app.table.export'|trans }}</span>
             </button>
             <ul class="dropdown-menu">
                 {% set baseExporterParams = exporterParams|default({}) %}
                 
                 {% if addPaginationRender.totalItemCount > addPaginationRender.itemNumberPerPage %}
                     {% set allParams = baseExporterParams|merge({'mode': 'page', 'page': addPaginationRender.currentPageNumber, 'offset': addPaginationRender.itemNumberPerPage}) %}
-                    <li><a class="dropdown-item" href="{{ path(exporterPath, allParams) }}"><i class="bi bi-book-half"></i> This page</a></li>
+                    <li><a class="dropdown-item" href="{{ path(exporterPath, allParams) }}"><i class="bi bi-book-half"></i> {{ 'app.table.this_page'|trans }}</a></li>
                 {% endif %} 
                 
                 {% set allParams = baseExporterParams|merge({'mode': 'all'}) %}
-                <li><a class="dropdown-item" href="{{ path(exporterPath, allParams) }}"><i class="bi bi-book-fill"></i> All pages</a></li>
+                <li><a class="dropdown-item" href="{{ path(exporterPath, allParams) }}"><i class="bi bi-book-fill"></i> {{ 'app.table.all_pages'|trans }}</a></li>
             </ul>
         </div>
 

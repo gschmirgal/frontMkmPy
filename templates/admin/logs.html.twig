@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{"Admin - "~script~" logs"}} {% endblock %}
+{% block title %}{{ 'app.navigation.admin'|trans }} - {{ script }} {{ 'app.navigation.logs'|trans }} - {{ 'app.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{script ~" script logs"}}</h1>
+    <h1>{{ 'app.admin.logs.script_logs'|trans({'%script%': script}) }}</h1>
     {{ component('table', {headers: tableColumns, rows: logs, addPaginationRender: addPaginationRender, exporterPath: exporterPath}) }}
 {% endblock %}

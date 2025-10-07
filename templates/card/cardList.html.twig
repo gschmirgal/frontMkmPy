@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Card List{% endblock %}
+{% block title %}{{ 'app.card.list_title'|trans }} - {{ 'app.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Cards List</h1>
+    <h1>{{ 'app.card.list_title'|trans }}</h1>
     {{ component('list', {data: cards}) }}
 {% endblock %}

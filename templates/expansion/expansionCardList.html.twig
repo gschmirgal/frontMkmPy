@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{"Cards list - "~expansion.name}} {% endblock %}
+{% block title %}{{ 'app.card.list_for'|trans }} {{ expansion.name }} - {{ 'app.title'|trans }}{% endblock %}
 
 {% block body %}
     <h1>{{expansion.name}}</h1>
     
     <div class="d-flex align-items-center gap-3 mb-3">
-        <span>Sorting by:</span>
+        <span>{{ 'app.sorting.by'|trans }}</span>
         <div class="btn-group">
             <input type="radio" class="btn-check" name="sort" value="collector_number" id="number" autocomplete="off"
                    onchange="sortCards(this.value)">
-            <label class="btn" for="number">Collector Number</label>
+            <label class="btn" for="number">{{ 'app.sorting.collector_number'|trans }}</label>
 
             <input type="radio" class="btn-check" name="sort" value="name_asc" id="AZ" autocomplete="off"
                    onchange="sortCards(this.value)">
-            <label class="btn" for="AZ">A-Z</label>
+            <label class="btn" for="AZ">{{ 'app.sorting.name_asc'|trans }}</label>
 
             <input type="radio" class="btn-check" name="sort" value="name_desc" id="ZA" autocomplete="off"
                    onchange="sortCards(this.value)">
-            <label class="btn" for="ZA">Z-A</label>
+            <label class="btn" for="ZA">{{ 'app.sorting.name_desc'|trans }}</label>
         </div>
     </div>
     {{ component('list_cards', {data: cards}) }}

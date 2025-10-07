@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{"Card Details - "~card.name~"-"~expansion.name}} {% endblock %}
+{% block title %}{{ 'app.card.details'|trans }} - {{ card.name }} - {{ expansion.name }} - {{ 'app.title'|trans }}{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/expansionCardListDetail.css') }}">
 {% endblock %}
@@ -22,8 +22,8 @@
             {{ render_chart(chart,{'class': 'price-chart'}) }}
         </div>
     </div>
-    {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?isFoil=Y&idProduct="~cardId, text: "Buy Foil on CardMarket"}) }}
-    {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?idProduct="~cardId, text: "Buy on CardMarket"}) }}
+    {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?isFoil=Y&idProduct="~cardId, text: 'app.card.buy_foil'|trans}) }}
+    {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?idProduct="~cardId, text: 'app.card.buy_normal'|trans}) }}
     {{ component('button', {btnType: "btn-info", link: scryfalluri, text: "Scryfall"}) }}
     {{ component('button', {btnType: "btn-danger", link: gathereruri, text: "Gatherer"}) }}
 

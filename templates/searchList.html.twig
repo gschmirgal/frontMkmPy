@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{"Search for: "~search}}{% endblock %}
+{% block title %}{{ 'app.search.results_for'|trans }} {{ search }} - {{ 'app.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Recherche</h1>
-    <p>{{ (cardsList|length + expansionsList|length - 4) ~ " match(s) for: \""~search~"\""}}</p>
+    <h1>{{ 'app.search.title'|trans }}</h1>
+    <p>{{ 'app.search.found'|trans({}, 'messages', app.request.locale, (cardsList|length + expansionsList|length - 4)) }} {{ 'app.search.results_for'|trans|lower }} "{{ search }}"</p>
     
     <div class="row">
         <div class="col">

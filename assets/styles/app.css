@@ -1,3 +1,11 @@
+/*nav bar*/
+@media (min-width: 992px) {
+    .navbar-search-input {
+        min-width: 200px !important;
+    }
+}
+
+
 .img-max-250 {
     max-width: 250px;
 }
@@ -21,7 +29,7 @@ ul.pagination {
     margin-right: 16px;
 }
 
-/* Ou avec Bootstrap dark mode */
+/* icones theme sombre */
 [data-bs-theme="dark"] .expansion-icon {
     filter: invert(1);
 }

@@ -1,0 +1,104 @@
+# Traductions françaises
+app:
+    title: "MKM.py Front"
+    
+    navigation:
+        home: "Accueil"
+        cards: "Cartes"
+        expansions: "Extensions"
+        logs: "Journaux"
+        admin: "Admin"
+        search: "Rechercher"
+        search_placeholder: "Rechercher"
+    
+    card:
+        name: "Nom de la carte"
+        expansion: "Extension"
+        collector_number: "Numéro de collection"
+        details: "Détails de la carte"
+        buy_foil: "Acheter Foil sur CardMarket"
+        buy_normal: "Acheter sur CardMarket"
+        flip_card: "Retourner la carte"
+        list_title: "Liste des cartes"
+        list_for: "Liste des cartes pour"
+        all_cards: "Toutes les cartes"
+        columns:
+            date: "Date"
+            average: "Moyenne"
+            lower: "Plus bas"
+            trend: "Tendance"
+            avg1: "Moyenne 1 jour"
+            avg7: "Moyenne 7 jours"
+            avg30: "Moyenne 30 jours"
+            average_foil: "Moyenne Foil"
+            lower_foil: "Plus bas Foil"
+            trend_foil: "Tendance Foil"
+            avg1_foil: "Moyenne 1 jour Foil"
+            avg7_foil: "Moyenne 7 jours Foil"
+            avg30_foil: "Moyenne 30 jours Foil"
+        chart:
+            not_foil: "Normale"
+            not_foil_prediction: "Prédiction Normale"
+            foil: "Foil"
+            foil_prediction: "Prédiction Foil"
+    
+    expansion:
+        name: "Nom de l'extension"
+        cards_list: "Liste des cartes"
+        card_count: "Nombre de cartes"
+        list_title: "Liste des extensions"
+        all_expansions: "Toutes les extensions"
+    
+    admin:
+        logs:
+            mkmpy: "Journaux de MKM.py"
+            mkmoraclepy: "Journaux de MKM OraclePy"
+            script_logs: "Journaux du script %script%"
+            title: "Journaux du Script"
+        columns:
+            id: "ID"
+            date_import: "Date d'import"
+            date_import_file: "Date du fichier d'import"
+            date_data: "Date des données"
+            date: "Date"
+            task: "Tâche"
+            status: "Statut"
+    
+    search:
+        title: "Résultats de recherche"
+        results_for: "Résultats pour"
+        no_results: "Aucun résultat trouvé"
+        found: "résultat trouvé|résultats trouvés"
+    
+    table:
+        export: "Exporter"
+        this_page: "Cette page"
+        all_pages: "Toutes les pages"
+        no_data: "Aucune donnée disponible"
+    
+    sorting:
+        by: "Trier par :"
+        collector_number: "Numéro de collection"
+        name_asc: "A-Z"
+        name_desc: "Z-A"
+    
+    pagination:
+        previous: "Précédent"
+        next: "Suivant"
+        first: "Premier"
+        last: "Dernier"
+    
+    status:
+        finished: "Terminé"
+        error: "Erreur"
+        running: "En cours"
+
+home:
+    welcome: "Bienvenue sur MKM.py Front"
+    description: "Interface web développée avec Symfony, permettant d'exploiter les données structurées par mkm.py via une navigation fluide et intuitive"
+    project_links: "Liens des projets :"
+    frontend_description: "le front Symfony"
+    script_description: "le script Python qui génère la base de données"
+    ai_description: "le script Python d'IA pour la prédiction des prix"
+    personal_links: "Liens personnels :"
+    portfolio: "Portfolio"

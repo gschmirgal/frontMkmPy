@@ -12,7 +12,7 @@ use App\Repository\ExpansionsRepository;
 use App\Repository\ProductsRepository;
 use App\Repository\PricesRepository;
 use App\Repository\PricesPredictRepository;
-
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -23,53 +23,60 @@ class CardController extends AbstractController{
     private array $graphlist = [ 0 => 'avg1', 2 => 'avg1Foil'];
     // Liste des clés pour les datasets de prédiction du graphique
     private array $graphlistpredict = [1 => 'avg1Predict', 3 => 'avg1FoilPredict'];
-    // Styles des courbes pour Chart.js (couleurs, dash, etc.)
-    private array $graphStyle = [
+    // Styles des courbes pour Chart.js (couleurs, dash, etc.) avec traductions
+    private function getGraphStyle(TranslatorInterface $translator): array
+    {
+        return [
             'avg1' => [
                 'mkmvalue' => 'avg1',
-                'label' => "not Foil",
+                'label' => $translator->trans('app.card.chart.not_foil'),
                 'borderColor' => 'rgb(255, 99, 132)', 
                 'backgroundColor' => 'rgba(255, 99, 132, 0.2)'
             ],
             'avg1Predict' => [
                 'mkmvalue' => 'avg1Predict',
-                'label' => "not Foil Prediction",
+                'label' => $translator->trans('app.card.chart.not_foil_prediction'),
                 'borderColor' => 'rgb(255, 99, 132)', 
                 'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
                 'borderDash' => [5, 5],
             ],
             'avg1Foil' => [
                 'mkmvalue' => 'avg1Foil',
-                'label' => "Foil",
+                'label' => $translator->trans('app.card.chart.foil'),
                 'borderColor' => 'rgba(0,200,255,1)',
                 'backgroundColor' => 'rgba(0,255,255,0.3)'
             ],
             'avg1FoilPredict' => [
                 'mkmvalue' => 'avg1FoilPredict',
-                'label' => "Foil Prediction",
+                'label' => $translator->trans('app.card.chart.foil_prediction'),
                 'borderColor' => 'rgba(0,200,255,1)',
                 'backgroundColor' => 'rgba(0,255,255,0.3)',
                 'borderDash' => [5, 5],
             ],
         ];
+    }
     // Limite d'éléments par page pour le tableau
     private int $tableLimit = 30;
-    // Colonnes du tableau d'évolution des prix
-    private array $tableColumns = [
-            'dateData'  => 'Date',
-            'avg'       => 'Average',
-            'low'       => 'Lower',
-            'trend'     => 'Trend',
-            'avg1'      => '1 days average',
-            'avg7'      => '7 days average',
-            'avg30'     => '30 days average',
-            'avgFoil'   => 'Average foil',
-            'lowFoil'   => 'Lower foil',
-            'trendFoil' => 'Trend Foil',
-            'avg1Foil'  => '1 days average Foil',
-            'avg7Foil'  => '7 days average Foil',
-            'avg30Foil' => '30 days average Foil',
+    
+    // Colonnes du tableau d'évolution des prix (traduites)
+    private function getTableColumns(TranslatorInterface $translator): array
+    {
+        return [
+            'dateData'  => $translator->trans('app.card.columns.date'),
+            'avg'       => $translator->trans('app.card.columns.average'),
+            'low'       => $translator->trans('app.card.columns.lower'),
+            'trend'     => $translator->trans('app.card.columns.trend'),
+            'avg1'      => $translator->trans('app.card.columns.avg1'),
+            'avg7'      => $translator->trans('app.card.columns.avg7'),
+            'avg30'     => $translator->trans('app.card.columns.avg30'),
+            'avgFoil'   => $translator->trans('app.card.columns.average_foil'),
+            'lowFoil'   => $translator->trans('app.card.columns.lower_foil'),
+            'trendFoil' => $translator->trans('app.card.columns.trend_foil'),
+            'avg1Foil'  => $translator->trans('app.card.columns.avg1_foil'),
+            'avg7Foil'  => $translator->trans('app.card.columns.avg7_foil'),
+            'avg30Foil' => $translator->trans('app.card.columns.avg30_foil'),
         ];
+    }
 
     // Affiche la liste des cartes disponibles
     #[Route('/cards', name: 'card.list')]
@@ -147,9 +154,14 @@ class CardController extends AbstractController{
                                     ProductsRepository $repositoryProd, 
                                     PricesRepository $repositoryPrices, 
                                     PricesPredictRepository $repositoryPricesPredict, 
-                                    ChartBuilderInterface $chartBuilder
+                                    ChartBuilderInterface $chartBuilder,
+                                    TranslatorInterface $translator
                                 ): Response 
     {   
+        // Récupération des colonnes et styles traduits
+        $tableColumns = $this->getTableColumns($translator);
+        $graphStyle = $this->getGraphStyle($translator);
+        
         // Récupération des entités principales
         $expansion = $repositoryExp->find($expansionid);
         $card = $repositoryProd->find($cardid);
@@ -181,11 +193,11 @@ class CardController extends AbstractController{
             // Ajout des valeurs historiques pour chaque courbe
             foreach( $this->graphlist as $index =>$key ){
                 if( !isset($dataGraph['datasets'][$index]) ){
-                    $dataGraph['datasets'][$index] = $this->graphStyle[$key];
+                    $dataGraph['datasets'][$index] = $graphStyle[$key];
                     //initialisation ici de la courbe de prédiction associée
                     //permet de donner l'impression que les courbes se suivent
                     $dataGraph['datasets'][$index + 1] = 
-                        $this->graphStyle[$key."Predict"] +
+                        $graphStyle[$key."Predict"] +
                         ["data" => [$date => $price->{"get".$key}()]];
                     
                 }
@@ -198,7 +210,7 @@ class CardController extends AbstractController{
 
             // Préparation des données pour le tableau
             $row = [];
-            foreach (array_keys($this->tableColumns) as $col) {
+            foreach (array_keys($tableColumns) as $col) {
                 $getter = 'get' . ucfirst($col);
                 if (method_exists($price, $getter)) {
                     $value = $price->$getter();
@@ -264,7 +276,7 @@ class CardController extends AbstractController{
             'cardArtBack' => $cardArtBack,
             'card' => $card,
             'prices' => $tableData,
-            'headerstable' => array_values($this->tableColumns),
+            'headerstable' => array_values($tableColumns),
             'addPaginationRender' => $prices,
             'chart' => $chart,
         ]);

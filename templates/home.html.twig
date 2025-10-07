@@ -1,18 +1,20 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ 'app.navigation.home'|trans }} - {{ 'app.title'|trans }}{% endblock %}
+
 {% block body %}
-    <h1>Welcome MKM.py front</h1>
-    <p>Projet Symfony pour créer un front à la base de données générée par mkm.py</p>
-    <p>Liens des projets :</p>
+    <h1>{{ 'home.welcome'|trans }}</h1>
+    <p>{{ 'home.description'|trans }}</p>
+    <p>{{ 'home.project_links'|trans }}</p>
     <ul>
-        <li><a href="https://github.com/gschmirgal/frontMkmPy" target="_blank">frontMkmPy</a> : le front Symfony</li>
-        <li><a href="https://github.com/gschmirgal/mkmpy" target="_blank">mkm.py</a> : le script Python qui génère la base de données</li>
-        <li><a href="https://github.com/gschmirgal/MKMOraclePy" target="_blank">MKMOraclePy</a> : le script Python d'IA pour la prediction des prix</li>
+        <li><a href="https://github.com/gschmirgal/frontMkmPy" target="_blank">frontMkmPy</a> : {{ 'home.frontend_description'|trans }}</li>
+        <li><a href="https://github.com/gschmirgal/mkmpy" target="_blank">mkm.py</a> : {{ 'home.script_description'|trans }}</li>
+        <li><a href="https://github.com/gschmirgal/MKMOraclePy" target="_blank">MKMOraclePy</a> : {{ 'home.ai_description'|trans }}</li>
     </ul>
 
-    <p>Liens personnels:</p>
+    <p>{{ 'home.personal_links'|trans }}</p>
     <ul>
-        <li><a href="https://gschmirgal.ovh" target="_blank">Portfolio</a></li>
+        <li><a href="https://gschmirgal.ovh" target="_blank">{{ 'home.portfolio'|trans }}</a></li>
         <li><a href="https://www.linkedin.com/in/schmirgal" target="_blank">LinkedIn</a></li>
         <li><a href="https://github.com/gschmirgal" target="_blank">GitHub</a></li>
     </ul>

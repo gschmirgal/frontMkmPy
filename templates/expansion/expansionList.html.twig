@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Expansion List{% endblock %}
+{% block title %}{{ 'app.expansion.list_title'|trans }} - {{ 'app.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Expansions List</h1>
+    <h1>{{ 'app.expansion.list_title'|trans }}</h1>
     {{ component('list', {data: expansions}) }}
 {% endblock %}
