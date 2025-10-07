@@ -1,0 +1,8 @@
+<div class="stats-grid">
+    {% for key, stat in stats %}
+        <div class="stat-item{% if not loop.last %} mb-3{% endif %}">
+            <div class="h2 fw-bold mb-0 counter" data-target="{{ stat.count }}">0</div>
+            <small class="opacity-75">{{ stat.label }}</small>
+        </div>
+    {% endfor %}
+</div>

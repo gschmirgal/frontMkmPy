@@ -1,0 +1,33 @@
+{% set contactLinks = [
+    {
+        url: 'https://gschmirgal.ovh',
+        icon: 'bi-person-circle',
+        label: 'home.portfolio'|trans,
+        class: 'btn-light text-primary fw-bold'
+    },
+    {
+        url: 'https://www.linkedin.com/in/schmirgal',
+        icon: 'bi-linkedin',
+        label: 'LinkedIn',
+        class: 'btn-light text-primary fw-bold'
+    },
+    {
+        url: 'https://github.com/gschmirgal',
+        icon: 'bi-github',
+        label: 'GitHub',
+        class: 'btn-light text-primary fw-bold'
+    }
+] %}
+
+<div class="bg-primary text-white py-5 rounded">
+    <div class="container text-center">
+        <h2 class="mb-4 text-white">{{ 'home.personal_links'|trans }}</h2>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            {% for link in contactLinks %}
+                <a href="{{ link.url }}" target="_blank" class="btn {{ link.class }}">
+                    <i class="bi {{ link.icon }} me-2"></i>{{ link.label }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

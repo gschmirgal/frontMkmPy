@@ -1,0 +1,46 @@
+/* Homepage feature icons */
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-primary-dark, #0d47a1) 100%);
+}
+
+.stats-grid {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.expansion-card:hover,
+.project-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+
+/* Homepage expansion titles */
+.expansion-title {
+    line-height: 1.2;
+    min-height: 2.4em;
+    /* Space for 2 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Limit to 2 lines */
+    line-clamp: 2;
+    /* Standard property */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+}

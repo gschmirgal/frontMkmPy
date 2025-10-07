@@ -1,0 +1,32 @@
+{% set projects = [
+    {
+        icon: 'bi-globe',
+        color: 'primary',
+        name: 'frontMkmPy',
+        description: 'home.frontend_description'|trans,
+        url: 'https://github.com/gschmirgal/frontMkmPy'
+    },
+    {
+        icon: 'bi-terminal',
+        color: 'success',
+        name: 'mkm.py',
+        description: 'home.script_description'|trans,
+        url: 'https://github.com/gschmirgal/mkmpy'
+    },
+    {
+        icon: 'bi-cpu',
+        color: 'info',
+        name: 'MKMOraclePy',
+        description: 'home.ai_description'|trans,
+        url: 'https://github.com/gschmirgal/MKMOraclePy'
+    }
+] %}
+
+<div class="container mb-5">
+    <h2 class="text-center mb-4">{{ 'home.project_links'|trans }}</h2>
+    <div class="row g-4 justify-content-center">
+        {% for project in projects %}
+            {% include 'components/home/_project_card.html.twig' with { project: project } %}
+        {% endfor %}
+    </div>
+</div>

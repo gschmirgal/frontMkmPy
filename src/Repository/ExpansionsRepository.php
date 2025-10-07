@@ -30,29 +30,23 @@ class ExpansionsRepository extends ServiceEntityRepository
             ;
 
         }
-        
-    //    /**
-    //     * @return Expansions[] Returns an array of Expansions objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?Expansions
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        /**
+         * Find recent expansions with their card count
+         * 
+         * @param int $limit
+         * @return array
+         */
+        public function findRecentExpansionsWithCardCount(int $limit = 6): array
+        {
+            return $this->createQueryBuilder('e')
+                ->select('e.id, e.name, COUNT(p.id) as cardCount')
+                ->leftJoin('App\Entity\Products', 'p', 'WITH', 'p.expansion = e.id')
+                ->groupBy('e.id, e.name')
+                ->orderBy('e.id', 'DESC')
+                ->setMaxResults($limit)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
 }

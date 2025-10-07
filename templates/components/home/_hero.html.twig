@@ -1,0 +1,27 @@
+{% set stats = {
+    expansions: { count: totalExpansions, label: 'home.stats.expansions'|trans },
+    cards: { count: totalCards, label: 'home.stats.cards'|trans },
+    prices: { count: totalPrices, label: 'home.stats.prices'|trans }
+} %}
+
+<div class="hero-section bg-primary text-white py-5 mb-5 rounded">
+    <div class="container px-4 px-lg-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">{{ 'home.welcome'|trans }}</h1>
+                <p class="lead mb-4">{{ 'home.description'|trans }}</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{{ path('card.list') }}" class="btn btn-light btn-lg">
+                        <i class="bi bi-collection me-2"></i>{{ 'app.navigation.cards'|trans }}
+                    </a>
+                    <a href="{{ path('expansion.list') }}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-grid-3x3-gap me-2"></i>{{ 'app.navigation.expansions'|trans }}
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                {% include 'components/home/_stats.html.twig' with { stats: stats } %}
+            </div>
+        </div>
+    </div>
+</div>

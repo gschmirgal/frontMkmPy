@@ -5,147 +5,221 @@
 ![Doctrine](https://img.shields.io/badge/doctrine-3.5+-FC6F2B.svg?style=for-the-badge&logo=doctrine)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-5.0-7952B3.svg?style=for-the-badge&logo=bootstrap)
 ![Chart.js](https://img.shields.io/badge/chart.js-4.0-FF6384.svg?style=for-the-badge&logo=chart.js)
+![Turbo](https://img.shields.io/badge/turbo-SPA-00A8E6.svg?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)
 
-frontMkmPy est une application web Symfony dédiée au suivi de l'évolution des prix des cartes à collectionner.
-Elle sert d'interface front-end pour la base de données du projet [mkmpy](https://github.com/gschmirgal/mkmpy) : elle permet de visualiser, rechercher et analyser l'évolution des prix, extensions et informations associées, avec une interface moderne et responsive.
+**frontMkmPy** est une application web Symfony moderne dédiée au suivi professionnel de l'évolution des prix des cartes Magic: The Gathering.
 
-## Fonctionnalités principales
+Elle sert d'interface front-end sophistiquée pour la base de données du projet [mkmpy](https://github.com/gschmirgal/mkmpy) et intègre l'intelligence artificielle de [MKMOraclePy](https://github.com/gschmirgal/MKMOraclePy) pour des prédictions de prix avancées.
 
-- **Suivi graphique** de l'évolution des prix des cartes (historique, comparaisons)
-- **Interface moderne** avec thème clair/sombre automatique
-- **Affichage des listes** de cartes, extensions, prix avec pagination
-- **Recherche avancée** multi-critères et navigation rapide
-- **Images hover** et prévisualisation des cartes
-- **Design responsive** Bootstrap 5
-- **Composants Twig** réutilisables (tables, listes de cartes)
-- **Intégration Scryfall** pour les images et métadonnées
+## 📖 Table des matières
 
-frontMkmPy est une application web Symfony dédiée au suivi de l’évolution des prix des cartes à collectionner.
-Elle sert d’interface front-end pour la base de données du projet [mkmpy](https://github.com/gschmirgal/mkmpy) : elle permet de visualiser, rechercher et analyser l’évolution des prix, extensions et informations associées, avec une interface moderne et responsive.
+- [✨ Fonctionnalités](#-fonctionnalités)
+- [🛠️ Stack technique](#️-stack-technique)
+- [📋 Prérequis](#-prérequis)
+- [🚀 Installation](#-installation)
+- [🌐 Utilisation](#-utilisation)
+- [📁 Structure du projet](#-structure-du-projet)
+- [🔧 Configuration](#-configuration)
+- [🤝 Contribution](#-contribution)
+- [🔗 Liens utiles](#-liens-utiles)
+- [📄 Licence](#-licence)
 
-## Fonctionnalités principales
+## ✨ Fonctionnalités
 
-- Suivi graphique de l’évolution des prix des cartes (historique, comparaisons)
-- Affichage des listes de cartes, extensions, prix
-- Recherche multi-critères et navigation rapide
-- Thème clair/sombre, hover image, responsive Bootstrap
-- Pagination (KnpPaginator)
+### 📊 Analytics & Visualisation
+- **Graphiques interactifs** Chart.js avec évolution des prix et prédictions IA
+- **Statistiques en temps réel** avec animations de compteurs sur la homepage
+- **Comparaisons historiques** et analyse de tendances
+- **Export de données** en CSV et autres formats
 
-## Stack technique
+### 🌐 Interface utilisateur moderne
+- **Design responsive** Bootstrap 5 avec support mobile complet
+- **Thème adaptatif** clair/sombre avec détection automatique du système
+- **Navigation SPA** ultra-rapide avec Turbo.js
+- **Animations fluides** et transitions élégantes
+- **Homepage impactante** avec sections modulaires
 
-- **Symfony 7.3** 
-- **Doctrine ORM 3.5+**
-- **Twig**
-- **Bootstrap 5** (avec thème sombre/clair)
-- **Chart.js (Symfony UX)**
-- **AssetMapper** (importmap, sans Webpack)
-- **KnpPaginatorBundle** (pagination)
-- **Symfony UX Components** (TwigComponent, Turbo, ChartJS)
+### 🔍 Recherche & Navigation
+- **Recherche avancée** multi-critères avec filtres intelligents
+- **Navigation fluide** avec URLs localisées (EN/FR)
+- **Pagination optimisée** avec KnpPaginator
+- **Tri dynamique** des tables avec localStorage
 
-## Prérequis
+### 🌍 Internationalisation
+- **Support multilingue** complet (Français/Anglais)
+- **Sélecteur de langue** avec drapeaux et URLs localisées
+- **Traductions dynamiques** dans les contrôleurs et templates
+- **Interface adaptative** selon la locale
 
-- **PHP >= 8.2**
-- **Composer**
-- **MySQL ou MariaDB**
-- **Symfony CLI** (recommandé)
-- Node.js (optionnel, pour certains assets)
+### 🎮 Fonctionnalités Magic: The Gathering
+- **Intégration Scryfall** pour images et métadonnées
+- **Hover d'images** avec prévisualisation des cartes
+- **Gestion des extensions** avec comptage automatique des cartes
+- **Support des cartes foil** et versions alternatives
+- **Flip cards** avec animations CSS
 
-## Installation
+## 🛠️ Stack technique
 
-1. **Cloner le dépôt**
-  ```bash
-  git clone <url-du-repo>
-  cd frontMkmPy
-  ```
-2. **Installer les dépendances PHP**
-  ```bash
-  composer install
-  ```
-3. **Configurer l’environnement**
-  - Copier `.env` en `.env.local` et adapter `DATABASE_URL`.
-4. **Créer la base et lancer les migrations**
-  ```bash
-  php bin/console doctrine:database:create
-  php bin/console doctrine:migrations:migrate
-  ```
-5. **Compiler les assets**
-  ```bash
-  php bin/console asset-map:compile
-  ```
-6. **Lancer le serveur**
-  ```bash
-  symfony server:start
-  # ou pour un accès réseau
-  php -S 0.0.0.0:8000 -t public
-  ```
+### Backend
+- **Symfony 7.3** - Framework PHP moderne
+- **Doctrine ORM 3.5+** - Mapping objet-relationnel
+- **PHP 8.2+** - Dernières fonctionnalités du langage
+- **MySQL/MariaDB** - Base de données relationnelle
 
-## Mise à jour
+### Frontend
+- **Twig 3.x** - Moteur de templates modulaire
+- **Bootstrap 5** - Framework CSS responsive
+- **Turbo.js** - Navigation SPA sans JavaScript complexe
+- **Chart.js 4.x** - Graphiques interactifs
+- **Bootstrap Icons** - Iconographie cohérente
 
-Pour mettre à jour le projet vers les dernières versions :
+### Architecture
+- **AssetMapper** - Gestion d'assets moderne sans Webpack
+- **Symfony UX** - Composants réactifs (Turbo, ChartJS, TwigComponent)
+- **Composants Twig** - Architecture modulaire et réutilisable
+- **JavaScript modulaire** - Code organisé en modules ES6+
 
+## 📋 Prérequis
+
+- **PHP >= 8.2** avec extensions : `pdo_mysql`, `intl`, `opcache`
+- **Composer 2.x** - Gestionnaire de dépendances PHP
+- **MySQL 8.0+** ou **MariaDB 10.6+**
+- **Symfony CLI** (recommandé pour le développement)
+- **Git** pour le versioning
+
+## 🚀 Installation
+
+### 1. Cloner le dépôt
 ```bash
-# Mettre à jour les dépendances
-composer update
-
-# Appliquer les nouvelles migrations
-php bin/console doctrine:migrations:migrate
-
-# Recompiler les assets
-php bin/console asset-map:compile
-
-# Vider le cache
-php bin/console cache:clear
+git clone https://github.com/gschmirgal/frontMkmPy.git
+cd frontMkmPy
 ```
 
-## Structure du projet
+### 2. Installer les dépendances
+```bash
+composer install
+```
 
-- `src/Entity/` : Entités Doctrine (Products, Expansions, Prices, ScryfallProducts, ExpansionsMatching...)
-- `src/Controller/` : Contrôleurs Symfony (Card, Expansion, Home...)
-- `src/Repository/` : Repositories Doctrine avec requêtes optimisées
-- `src/Twig/Components/` : Composants Twig réutilisables (TableComponent...)
-- `templates/` : Templates Twig (pages, composants)
-- `templates/components/` : Composants UI réutilisables
-- `assets/` : Styles CSS et assets (AssetMapper)
-- `migrations/` : Migrations Doctrine
-- `public/` : Fichiers publics (images, assets compilés)
+### 3. Configuration
+```bash
+# Copier le fichier de configuration
+cp .env .env.local
 
-## Exemples d’utilisation
+# Éditer .env.local et configurer DATABASE_URL
+# DATABASE_URL="mysql://user:password@127.0.0.1:3306/frontmkmpy"
+```
 
-- Liste des extensions : `/expansions`
-- Détail d’une carte : `/card/{cardid}/{expansionid}`
-- Recherche : `/search?search=motclef`
+### 4. Base de données
+```bash
+# Créer la base de données
+php bin/console doctrine:database:create
 
-## Contribution
+# Appliquer les migrations
+php bin/console doctrine:migrations:migrate
+```
+
+### 5. Assets
+```bash
+# Compiler les assets
+php bin/console asset-map:compile
+```
+
+### 6. Lancer l'application
+```bash
+# Avec Symfony CLI (recommandé)
+symfony server:start
+
+# Ou avec PHP built-in server
+php -S 0.0.0.0:8000 -t public
+```
+
+## 🌐 Utilisation
+
+### URLs principales
+- **Homepage** : `/` (redirige vers `/en` ou `/fr`)
+- **Extensions** : `/fr/expansions`
+- **Cartes d'une extension** : `/fr/expansion/{id}`
+- **Détail d'une carte** : `/fr/card/{cardid}/{expansionid}`
+- **Recherche** : `/fr/search?search=motclef`
+- **Administration** : `/fr/admin/logs/mkmpy`
+
+### Fonctionnalités clés
+- **Changement de langue** via le sélecteur dans la navbar
+- **Thème sombre/clair** automatique ou manuel
+- **Export CSV** depuis les tables de données
+- **Graphiques interactifs** sur les pages de détail des cartes
+
+## 📁 Structure du projet
+
+```
+frontMkmPy/
+├── src/
+│   ├── Controller/          # Contrôleurs avec logique métier
+│   ├── Entity/              # Entités Doctrine ORM
+│   ├── Repository/          # Requêtes optimisées
+│   └── Twig/Components/     # Composants Twig réutilisables
+├── templates/
+│   ├── components/          # Composants UI modulaires
+│   │   └── home/           # Composants de la homepage
+│   ├── card/               # Pages des cartes
+│   └── expansion/          # Pages des extensions
+├── assets/
+│   ├── js/                 # JavaScript modulaire
+│   └── styles/             # Styles CSS personnalisés
+├── config/
+│   ├── packages/           # Configuration des bundles
+│   └── routes.yaml         # Routes localisées
+├── translations/           # Fichiers de traduction (EN/FR)
+└── migrations/             # Migrations de base de données
+```
+
+## 🔧 Configuration
+
+### Variables d'environnement (.env.local)
+```env
+DATABASE_URL="mysql://user:pass@host:3306/db"
+APP_ENV=prod
+APP_SECRET=your-secret-key
+```
+
+### Production
+```bash
+# Optimisation pour la production
+php bin/console cache:clear --env=prod
+php bin/console asset-map:compile
+
+# Permissions (Linux/Unix)
+sudo chown -R www-data:www-data var/
+sudo chmod -R 775 var/
+```
+
+## 🤝 Contribution
 
 1. Forkez le projet
-2. Créez une branche (`git checkout -b feature/ma-feature`)
-3. Commitez vos modifications
+2. Créez une branche feature (`git checkout -b feature/ma-feature`)
+3. Commitez vos modifications (`git commit -m 'Ajout ma feature'`)
 4. Poussez la branche (`git push origin feature/ma-feature`)
 5. Ouvrez une Pull Request
 
-## Liens utiles
+## 🔗 Liens utiles
 
-- [Symfony](https://symfony.com/doc/current/index.html)
-- [Doctrine](https://www.doctrine-project.org/projects/doctrine-orm/en/current/index.html)
-- [Twig](https://twig.symfony.com/doc/3.x/)
-- [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle)
+### Projets liés
+- **[mkmpy](https://github.com/gschmirgal/mkmpy)** - Script Python de collecte de données CardMarket
+- **[MKMOraclePy](https://github.com/gschmirgal/MKMOraclePy)** - Intelligence artificielle pour prédictions de prix
+- **[Portfolio](https://gschmirgal.ovh)** - Portfolio du développeur
+
+### Documentation
+- [Symfony 7.3](https://symfony.com/doc/7.3/index.html)
+- [Doctrine ORM](https://www.doctrine-project.org/projects/doctrine-orm/en/current/index.html)
+- [Bootstrap 5](https://getbootstrap.com/docs/5.3/)
 - [Chart.js](https://www.chartjs.org/)
+- [Turbo](https://turbo.hotwired.dev/)
 
-## Captures d'écran
+### APIs externes
+- [Scryfall API](https://scryfall.com/docs/api) - Données et images Magic
+- [CardMarket API](https://api.cardmarket.com/ws/documentation) - Prix et marketplace
 
-Quelques aperçus de l'application :
+## 📄 Licence
 
-![Accueil](.screenshots/accueil.png)
-![Liste des cartes](.screenshots/cardlist.png)
-![Détail carte](.screenshots/carddetails.png)
-![Carte dans extension](.screenshots/cardinext.png)
-![Versions carte](.screenshots/cardversion.png)
-![Liste extensions](.screenshots/extlist.png)
-![Recherche](.screenshots/search.png)
-![Import log](.screenshots/importlog.png)
-![Thème clair](.screenshots/lighttheme.png)
-
-## Licence
-
-MIT
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.

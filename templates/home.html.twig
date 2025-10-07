@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/home.js') }}" defer></script>
+{% endblock %}
+
 {% block title %}{{ 'app.navigation.home'|trans }} - {{ 'app.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'home.welcome'|trans }}</h1>
-    <p>{{ 'home.description'|trans }}</p>
-    <p>{{ 'home.project_links'|trans }}</p>
-    <ul>
-        <li><a href="https://github.com/gschmirgal/frontMkmPy" target="_blank">frontMkmPy</a> : {{ 'home.frontend_description'|trans }}</li>
-        <li><a href="https://github.com/gschmirgal/mkmpy" target="_blank">mkm.py</a> : {{ 'home.script_description'|trans }}</li>
-        <li><a href="https://github.com/gschmirgal/MKMOraclePy" target="_blank">MKMOraclePy</a> : {{ 'home.ai_description'|trans }}</li>
-    </ul>
-
-    <p>{{ 'home.personal_links'|trans }}</p>
-    <ul>
-        <li><a href="https://gschmirgal.ovh" target="_blank">{{ 'home.portfolio'|trans }}</a></li>
-        <li><a href="https://www.linkedin.com/in/schmirgal" target="_blank">LinkedIn</a></li>
-        <li><a href="https://github.com/gschmirgal" target="_blank">GitHub</a></li>
-    </ul>
+    {% include 'components/home/_hero.html.twig' %}
+    {% include 'components/home/_features.html.twig' %}
+    {% include 'components/home/_recent_expansions.html.twig' %}
+    {% include 'components/home/_projects.html.twig' %}
+    {% include 'components/home/_contact.html.twig' %}
 {% endblock %}

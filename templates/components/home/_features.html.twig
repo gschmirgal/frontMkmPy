@@ -1,0 +1,29 @@
+{% set features = [
+    {
+        icon: 'bi-graph-up',
+        color: 'primary',
+        title: 'home.features.price_tracking'|trans,
+        description: 'home.features.price_tracking_desc'|trans
+    },
+    {
+        icon: 'bi-robot',
+        color: 'success',
+        title: 'home.features.ai_prediction'|trans,
+        description: 'home.features.ai_prediction_desc'|trans
+    },
+    {
+        icon: 'bi-search',
+        color: 'info',
+        title: 'home.features.search'|trans,
+        description: 'home.features.search_desc'|trans
+    }
+] %}
+
+<div class="container mb-5">
+    <h2 class="text-center mb-5">{{ 'home.features.title'|trans }}</h2>
+    <div class="row g-4">
+        {% for feature in features %}
+            {% include 'components/home/_feature_card.html.twig' with { feature: feature } %}
+        {% endfor %}
+    </div>
+</div>

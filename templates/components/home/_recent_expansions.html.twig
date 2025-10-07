@@ -1,0 +1,15 @@
+{% if recentExpansions is not empty %}
+<div class="container mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ 'home.recent_expansions'|trans }}</h2>
+        <a href="{{ path('expansion.list') }}" class="btn btn-outline-primary">
+            {{ 'home.view_all'|trans }} <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+    <div class="row g-3">
+        {% for expansion in recentExpansions %}
+            {% include 'components/home/_expansion_card.html.twig' with { expansion: expansion } %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

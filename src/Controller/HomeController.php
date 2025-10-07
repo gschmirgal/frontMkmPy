@@ -13,9 +13,22 @@ use App\Repository\PricesRepository;
 class HomeController extends AbstractController{
 
     #[Route('/', name: 'home')]
-    function home (): Response 
+    function home (ExpansionsRepository $expansionsRepository, ProductsRepository $productsRepository, PricesRepository $pricesRepository): Response 
     {
-        return $this->render('home.html.twig');
+        // Get statistics for the homepage
+        $totalExpansions = $expansionsRepository->count([]);
+        $totalCards = $productsRepository->count([]);
+        $totalPrices = $pricesRepository->count([]);
+        
+        // Get recent expansions with card count
+        $recentExpansions = $expansionsRepository->findRecentExpansionsWithCardCount(6);
+        
+        return $this->render('home.html.twig', [
+            'totalExpansions' => $totalExpansions,
+            'totalCards' => $totalCards,
+            'totalPrices' => $totalPrices,
+            'recentExpansions' => $recentExpansions
+        ]);
     }
 
 }

@@ -1,0 +1,13 @@
+<div class="col-md-4 col-lg-2">
+    <div class="card expansion-card h-100 border-0 shadow-sm">
+        <div class="card-body p-3 text-center">
+            <h6 class="card-title mb-2 expansion-title">{{ expansion.name }}</h6>
+            <small class="text-muted">{{ expansion.cardCount }} {{ 'app.card.name'|trans|lower }}s</small>
+            <div class="mt-2">
+                <a href="{{ path('expansion.cardlist', {'id': expansion.id}) }}" class="btn btn-sm btn-outline-primary">
+                    {{ 'home.view_cards'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
