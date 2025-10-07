@@ -6,7 +6,16 @@
 {% endblock %}
 
 {% block body %}
-    <h1><a href="{{ path('card.expansionlist', {id: card.id })}}">{{ card.name }}</a> - <a href="{{ path('expansion.cardlist', {id: expansion.id })}}">{{ expansion.name }}</a></h1>
+    <div class="card-header-section">
+        <div class="badges-container">
+            <a href="{{ path('card.expansionlist', {id: card.id })}}" class="card-badge text-decoration-none">
+                <i class="bi bi-file-minus-fill me-2"></i><span class="cardName">{{ card.name }}</span>
+            </a>
+            <a href="{{ path('expansion.cardlist', {id: expansion.id })}}" class="card-badge text-decoration-none">
+                <i class="bi bi-box-seam-fill me-2"></i><span class="expansionName">{{ expansion.name }}</span>
+            </a>
+        </div>
+    </div>
     <div class="row align-items-center">
             <div class="col-12 col-md-auto text-center d-print-none">
                 <div class="position-relative d-inline-block my-4">
