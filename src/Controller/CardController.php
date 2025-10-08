@@ -31,32 +31,30 @@ class CardController extends AbstractController{
                 'mkmvalue' => 'avg1',
                 'label' => $translator->trans('app.card.chart.not_foil'),
                 'borderColor' => 'rgb(255, 99, 132)', 
-                'backgroundColor' => 'rgba(255, 99, 132, 0.2)'
+                'borderWidth' => 3,
             ],
             'avg1Predict' => [
                 'mkmvalue' => 'avg1Predict',
                 'label' => $translator->trans('app.card.chart.not_foil_prediction'),
                 'borderColor' => 'rgb(255, 99, 132)', 
-                'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
+                'borderWidth' => 1.5,
                 'borderDash' => [5, 5],
             ],
             'avg1Foil' => [
                 'mkmvalue' => 'avg1Foil',
                 'label' => $translator->trans('app.card.chart.foil'),
                 'borderColor' => 'rgba(0,200,255,1)',
-                'backgroundColor' => 'rgba(0,255,255,0.3)'
+                'borderWidth' => 3,
             ],
             'avg1FoilPredict' => [
                 'mkmvalue' => 'avg1FoilPredict',
                 'label' => $translator->trans('app.card.chart.foil_prediction'),
                 'borderColor' => 'rgba(0,200,255,1)',
-                'backgroundColor' => 'rgba(0,255,255,0.3)',
+                'borderWidth' => 1.5,
                 'borderDash' => [5, 5],
             ],
         ];
     }
-    // Limite d'éléments par page pour le tableau
-    private int $tableLimit = 30;
     
     // Colonnes du tableau d'évolution des prix (traduites)
     private function getTableColumns(TranslatorInterface $translator): array
@@ -76,6 +74,18 @@ class CardController extends AbstractController{
             'avg7Foil'  => $translator->trans('app.card.columns.avg7_foil'),
             'avg30Foil' => $translator->trans('app.card.columns.avg30_foil'),
         ];
+    }
+
+    function isMobileDevice(Request $request): bool {
+        $userAgent = $request->headers->get('User-Agent');
+
+        // Détection User-Agent basique
+        return preg_match('/Mobile|Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/', $userAgent);
+
+    }
+
+    function getTableLimit(Request $request): int {
+        return $this->isMobileDevice($request) ? 10 : 30;
     }
 
     // Affiche la liste des cartes disponibles
@@ -167,8 +177,9 @@ class CardController extends AbstractController{
         $card = $repositoryProd->find($cardid);
 
         // Pagination des prix historiques
+        $tableLimit = $this->getTableLimit($request);
         $page = $request->query->getInt('page', 1);
-        $prices = $repositoryPrices->paginatePrices($cardid, $page, $this->tableLimit);
+        $prices = $repositoryPrices->paginatePrices($cardid, $page, $tableLimit);
 
         // Récupération des prédictions uniquement sur la première page
         $pricesPredict = [];
@@ -263,6 +274,12 @@ class CardController extends AbstractController{
         // Création du graphique Chart.js
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart->setData($dataGraph);
+        
+        // Configuration pour éviter l'étirement
+        $chart->setOptions([
+            'responsive' => true,
+            'maintainAspectRatio' => false, // Important pour respecter la hauteur fixe
+        ]);
 
         // Rendu de la page avec le graphique et le tableau
         return $this->render('card/cardExpansionListDetail.html.twig', [

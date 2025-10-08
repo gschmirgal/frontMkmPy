@@ -6,7 +6,7 @@
 
 .price-chart {
     width: 100% !important;
-    height: auto !important;
+    height: 480px !important;
     display: block;
     min-width: 350px;
 }

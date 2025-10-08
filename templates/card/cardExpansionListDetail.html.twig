@@ -16,7 +16,7 @@
             </a>
         </div>
     </div>
-    <div class="row align-items-center">
+    <div class="row align-items-center mb-3">
             <div class="col-12 col-md-auto text-center d-print-none">
                 <div class="position-relative d-inline-block my-4">
                     <img src="{{ cardArt }}" alt="{{ card.name }}" class="img-fluid bigmtgcard" onclick="flipCard()" id="cardImage" data-front="{{ cardArt }}" data-back="{{ cardArtBack|default('') }}" data-showing="front">
@@ -31,10 +31,23 @@
             {{ render_chart(chart,{'class': 'price-chart'}) }}
         </div>
     </div>
-    {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?isFoil=Y&idProduct="~cardId, text: 'app.card.buy_foil'|trans}) }}
-    {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?idProduct="~cardId, text: 'app.card.buy_normal'|trans}) }}
-    {{ component('button', {btnType: "btn-info", link: scryfalluri, text: "Scryfall"}) }}
-    {{ component('button', {btnType: "btn-danger", link: gathereruri, text: "Gatherer"}) }}
+
+    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2 mb-4 d-none d-md-flex">
+        {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?idProduct="~cardId, text: 'app.card.buy_normal'|trans}) }}
+        {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?isFoil=Y&idProduct="~cardId, text: 'app.card.buy_foil'|trans}) }}
+        {{ component('button', {btnType: "btn-info", link: scryfalluri, text: "Scryfall"}) }}
+        {{ component('button', {btnType: "btn-danger", link: gathereruri, text: "Gatherer"}) }}
+    </div>
+    <div class="d-flex flex-column align-items-center gap-2 d-md-none mb-4">
+        <div class="d-flex flex-column gap-2">
+            {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?idProduct="~cardId, text: 'app.card.buy_normal'|trans, class: 'w-100'}) }}
+            {{ component('button', {link: "https://www.cardmarket.com/en/Magic/Products?isFoil=Y&idProduct="~cardId, text: 'app.card.buy_foil'|trans, class: 'w-100'}) }}
+        </div>
+        <div class="d-flex justify-content-center gap-2 w-100">
+            {{ component('button', {btnType: "btn-info", link: scryfalluri, text: "Scryfall", class: 'flex-fill'}) }}
+            {{ component('button', {btnType: "btn-danger", link: gathereruri, text: "Gatherer", class: 'flex-fill'}) }}
+        </div>
+    </div>
 
     {{ component('table', {headers: headerstable, rows: prices, addPaginationRender: addPaginationRender, exporterPath: exporterPath, exporterParams: exporterParams}) }}
 

@@ -13,5 +13,5 @@ class TableComponent
     public ?SlidingPagination $addPaginationRender = null;
     public ?string $exporterPath = null;
     public ?array $exporterParams = [];
-    public ?boolean $classic_pagination = null;
+    public ?bool $classic_pagination = null;
 }
