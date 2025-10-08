@@ -16,4 +16,4 @@ default_locale:
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
     defaults:
         route: 'home'
-        _locale: 'en'
+        _locale: 'fr'

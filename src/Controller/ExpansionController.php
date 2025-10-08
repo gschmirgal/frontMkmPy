@@ -54,9 +54,18 @@ class ExpansionController extends AbstractController{
                             int $id, 
                             Packages $assets, 
                             ExpansionsRepository $repositoryExp, 
-                            ProductsRepository $repositoryProd ): Response 
+                            ProductsRepository $repositoryProd,
+                            ExpansionsMatchingRepository $repositoryMatching ): Response 
     {   
         $expansion = $repositoryExp->find($id);
+
+        // Récupérer l'image de l'expansion depuis Scryfall via ExpansionsMatching
+        $expansionLogo = null;
+        $matching = $repositoryMatching->findOneBy(['cardMarketExpansionId' => $expansion]);
+        
+        if ($matching && $matching->getScryfallExpansion()) {
+            $expansionLogo = $matching->getScryfallExpansion()->getIconSvgUri();
+        }
 
         // Récupérer les cartes sans tri spécifique (ordre par défaut)
         $cards = $repositoryProd->findByExpansionWithRelations($id, 'collector_number');
@@ -91,6 +100,7 @@ class ExpansionController extends AbstractController{
         return $this->render('expansion/expansionCardList.html.twig', [
             'expansion' => $expansion,
             'cards' => $list,
+            'expansionLogo' => $expansionLogo,
         ]);
     }
 

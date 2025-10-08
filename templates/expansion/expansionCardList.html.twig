@@ -3,7 +3,12 @@
 {% block title %}{{ 'app.card.list_for'|trans }} {{ expansion.name }} - {{ 'app.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{expansion.name}}</h1>
+    <h1>
+        {% if expansionLogo is defined and expansionLogo is not empty %}
+            <img src="{{expansionLogo}}" class="card-img-top img-fluid icon expansion-icon" alt="{{expansion.name}}">
+        {% endif %}
+        {{expansion.name}}
+    </h1>
     
     <div class="d-flex align-items-center gap-3 mb-3">
         <span>{{ 'app.sorting.by'|trans }}</span>

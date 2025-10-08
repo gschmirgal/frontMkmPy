@@ -38,3 +38,5 @@ function animateCounters() {
 document.addEventListener('DOMContentLoaded', animateCounters);
 document.addEventListener('turbo:load', animateCounters);
 document.addEventListener('turbo:render', animateCounters);
+
+animateCounters();
