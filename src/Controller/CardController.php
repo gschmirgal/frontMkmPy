@@ -85,7 +85,7 @@ class CardController extends AbstractController{
     }
 
     function getTableLimit(Request $request): int {
-        return $this->isMobileDevice($request) ? 10 : 30;
+        return $this->isMobileDevice($request) ? 15 : 30;
     }
 
     // Affiche la liste des cartes disponibles
