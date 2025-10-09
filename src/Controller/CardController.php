@@ -181,6 +181,14 @@ class CardController extends AbstractController{
         $page = $request->query->getInt('page', 1);
         $prices = $repositoryPrices->paginatePrices($cardid, $page, $tableLimit);
 
+        //si parti trop loin dans les pages, on revient à la première
+        if( count($prices) === 0 && $page !== 1 ){
+            return $this->redirectToRoute('card.cardlist.detail', [
+                'expansionid' => $expansionid,
+                'cardid' => $cardid,
+            ]);
+        }
+
         // Récupération des prédictions uniquement sur la première page
         $pricesPredict = [];
         if( $page == 1 )

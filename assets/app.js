@@ -10,4 +10,18 @@ import './bootstrap.js';
 import './js/toogletheme.js';
 import './js/thumbnail.js';
 
+// Solution simple : empêcher le scroll automatique de Turbo
+let scrollPosition = 0;
+
+document.addEventListener('turbo:before-visit', () => {
+    scrollPosition = window.scrollY;
+});
+
+document.addEventListener('turbo:load', () => {
+    if (scrollPosition > 0) {
+        window.scrollTo(0, scrollPosition);
+        scrollPosition = 0;
+    }
+});
+
 //console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

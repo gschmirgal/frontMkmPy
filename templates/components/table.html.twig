@@ -32,8 +32,8 @@
     {% endif %}
 </div>
 <div class="table-responsive overflow-auto">
-    <table class="table table-striped table-hover table-bordered mb-0">
-        <thead>
+    <table class="table table-striped table-hover table-bordered mb-0 text-center align-middle">
+        <thead class="align-middle">
             <tr>
                 {% for header in headers %}
                     <th>{{ header }}</th>
@@ -44,7 +44,7 @@
             {% for row in rows %}
                 <tr>
                     {% for cell in row %}
-                        <td>{{ cell }}</td>
+                        <td class="text-nowrap">{{ cell }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
