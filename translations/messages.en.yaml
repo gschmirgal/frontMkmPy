@@ -125,3 +125,9 @@ pagination:
     current: "current page"
     showing: "Showing %from% to %to% of %total% results"
     items: "items"
+
+pwa:
+    install:
+        title: "Install App"
+        description: "Quick access to MKMpy from your home screen"
+        button: "Install"

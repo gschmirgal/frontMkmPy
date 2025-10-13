@@ -45,6 +45,8 @@ class ExpansionsMatchingRepository extends ServiceEntityRepository
             $result = [];
 
             foreach ($data as $row) {
+                if( array_key_exists( $row->getcardMarketExpansionId()->getId(), $result ) ) continue;
+
                 $result[$row->getcardMarketExpansionId()->getId()] = $row->getScryfallExpansion()->getIconSvgUri();
             }
 

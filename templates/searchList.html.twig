@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1>{{ 'app.search.title'|trans }}</h1>
-    <p>{{ 'app.search.found'|trans({}, 'messages', app.request.locale, (cardsList|length + expansionsList|length - 4)) }} {{ 'app.search.results_for'|trans|lower }} "{{ search }}"</p>
+    {% set nb_total = (cardsList|length + expansionsList|length - 4) %}
+    <p>{{ nb_total }} {{ 'app.search.found'|trans({}, 'messages', app.request.locale, nb_total) }} 
+    {{ 'app.search.results_for'|trans|lower }} "{{ search }}"</p>
     
     <div class="row">
         <div class="col">

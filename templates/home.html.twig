@@ -13,6 +13,7 @@
 {% block title %}{{ 'app.navigation.home'|trans }} - {{ 'app.title'|trans }}{% endblock %}
 
 {% block body %}
+    {% include 'components/home/_pwa.html.twig' %}
     {% include 'components/home/_hero.html.twig' %}
     {% include 'components/home/_features.html.twig' %}
     {% include 'components/home/_recent_expansions.html.twig' %}
