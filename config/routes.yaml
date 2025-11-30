@@ -1,3 +1,9 @@
+# Cache warmup route (without locale, for cron jobs)
+cache_warmup:
+    path: /cache/warmup
+    controller: App\Controller\CacheWarmupController::warmup
+    methods: [GET]
+
 # Routes avec locale
 controllers_with_locale:
     resource:

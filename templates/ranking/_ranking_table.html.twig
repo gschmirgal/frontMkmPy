@@ -1,0 +1,68 @@
+<div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+    <table class="table table-hover table-sm table-striped mb-0">
+        <thead class="table-light sticky-top">
+            <tr>
+                <th class="text-center" style="width: 40px;">#</th>
+                <th style="width: 60px;">{{ 'app.ranking.table.image'|trans }}</th>
+                <th>{{ 'app.ranking.table.card'|trans }}</th>
+                <th class="d-none d-md-table-cell">{{ 'app.ranking.table.expansion'|trans }}</th>
+                <th class="text-end">{{ 'app.ranking.table.old_price'|trans }}</th>
+                <th class="text-end">{{ 'app.ranking.table.current_price'|trans }}</th>
+                <th class="text-end">{{ 'app.ranking.table.variation'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, item in items %}
+                <tr>
+                    <td class="text-center fw-bold small">{{ key + 1 }}</td>
+                    <td>
+                        {% if item.imageUrl %}
+                            <img src="{{ item.imageUrl }}" alt="{{ item.product.name }}"
+                                 class="img-thumbnail card-hover-img"
+                                 data-img="{{ item.imageUrl }}"
+                                 style="width: 50px; height: auto; cursor: pointer;">
+                        {% else %}
+                            <img src="{{ asset('img/no_card.png') }}" alt="No image"
+                                 class="img-thumbnail" style="width: 50px; height: auto;">
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('card.cardlist.detail', {cardid: item.product.id, expansionid: item.expansion.id}) }}"
+                           class="text-decoration-none fw-semibold small">
+                            {{ item.product.name }}
+                        </a>
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        <a href="{{ path('expansion.cardlist', {id: item.expansion.id}) }}"
+                           class="text-decoration-none text-muted small">
+                            {{ item.expansion.name }}
+                        </a>
+                    </td>
+                    <td class="text-end text-muted small">{{ item.oldPrice|number_format(2, '.', ',') }} €</td>
+                    <td class="text-end fw-bold small">{{ item.currentPrice|number_format(2, '.', ',') }} €</td>
+                    <td class="text-end">
+                        {% if showAbsolute %}
+                            <span class="badge bg-{{ type == 'gainers' ? 'success' : 'danger' }}">
+                                {{ item.variationAbs > 0 ? '+' : '' }}{{ item.variationAbs|number_format(2, '.', ',') }} €
+                                <br>
+                                <small>({{ item.variationPct > 0 ? '+' : '' }}{{ item.variationPct|number_format(1, '.', ',') }}%)</small>
+                            </span>
+                        {% else %}
+                            <span class="badge bg-{{ type == 'gainers' ? 'success' : 'danger' }}">
+                                {{ item.variationPct > 0 ? '+' : '' }}{{ item.variationPct|number_format(1, '.', ',') }}%
+                                <br>
+                                <small>({{ item.variationAbs > 0 ? '+' : '' }}{{ item.variationAbs|number_format(2, '.', ',') }} €)</small>
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted py-5">
+                        {{ 'app.ranking.no_data'|trans }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

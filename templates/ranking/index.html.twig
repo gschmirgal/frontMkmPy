@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.navigation.rankings'|trans }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center mb-4">
+                <i class="bi bi-graph-up-arrow"></i>
+                {{ 'app.navigation.rankings'|trans }}
+            </h1>
+
+            {# Filters #}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        {# Timeframe filter #}
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label class="form-label fw-bold">{{ 'app.ranking.filter.timeframe'|trans }}</label>
+                            <div class="btn-group w-100" role="group">
+                                <a href="{{ path('app_rankings', {timeframe: '1d', foil: foil}) }}"
+                                   class="btn btn-{{ timeframe == '1d' ? 'primary' : 'outline-primary' }}">
+                                    {{ 'app.ranking.timeframe.1d'|trans }}
+                                </a>
+                                <a href="{{ path('app_rankings', {timeframe: '7d', foil: foil}) }}"
+                                   class="btn btn-{{ timeframe == '7d' ? 'primary' : 'outline-primary' }}">
+                                    {{ 'app.ranking.timeframe.7d'|trans }}
+                                </a>
+                                <a href="{{ path('app_rankings', {timeframe: '30d', foil: foil}) }}"
+                                   class="btn btn-{{ timeframe == '30d' ? 'primary' : 'outline-primary' }}">
+                                    {{ 'app.ranking.timeframe.30d'|trans }}
+                                </a>
+                            </div>
+                        </div>
+
+                        {# Foil filter #}
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ 'app.ranking.filter.variant'|trans }}</label>
+                            <div class="btn-group w-100" role="group">
+                                <a href="{{ path('app_rankings', {timeframe: timeframe, foil: 'normal'}) }}"
+                                   class="btn btn-{{ foil == 'normal' ? 'info' : 'outline-info' }}">
+                                    {{ 'app.ranking.variant.normal'|trans }}
+                                </a>
+                                <a href="{{ path('app_rankings', {timeframe: timeframe, foil: 'foil'}) }}"
+                                   class="btn btn-{{ foil == 'foil' ? 'info' : 'outline-info' }}">
+                                    <i class="bi bi-stars"></i> {{ 'app.ranking.variant.foil'|trans }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Top Gainers Section #}
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="mb-3">
+                <i class="bi bi-arrow-up-circle text-success"></i>
+                {{ 'app.ranking.title.gainers'|trans }}
+            </h2>
+        </div>
+
+        {# Gainers - Absolute Variation #}
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 border-success">
+                <div class="card-header bg-success text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-currency-euro"></i>
+                        {{ 'app.ranking.variation.absolute'|trans }}
+                    </h4>
+                </div>
+                <div class="card-body p-0">
+                    {{ include('ranking/_ranking_table.html.twig', {
+                        items: rankings.gainers.absolute,
+                        type: 'gainers',
+                        showAbsolute: true
+                    }) }}
+                </div>
+            </div>
+        </div>
+
+        {# Gainers - Relative Variation #}
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 border-success">
+                <div class="card-header bg-success text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-percent"></i>
+                        {{ 'app.ranking.variation.relative'|trans }}
+                    </h4>
+                </div>
+                <div class="card-body p-0">
+                    {{ include('ranking/_ranking_table.html.twig', {
+                        items: rankings.gainers.relative,
+                        type: 'gainers',
+                        showAbsolute: false
+                    }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Top Losers Section #}
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="mb-3">
+                <i class="bi bi-arrow-down-circle text-danger"></i>
+                {{ 'app.ranking.title.losers'|trans }}
+            </h2>
+        </div>
+
+        {# Losers - Absolute Variation #}
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-currency-euro"></i>
+                        {{ 'app.ranking.variation.absolute'|trans }}
+                    </h4>
+                </div>
+                <div class="card-body p-0">
+                    {{ include('ranking/_ranking_table.html.twig', {
+                        items: rankings.losers.absolute,
+                        type: 'losers',
+                        showAbsolute: true
+                    }) }}
+                </div>
+            </div>
+        </div>
+
+        {# Losers - Relative Variation #}
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-percent"></i>
+                        {{ 'app.ranking.variation.relative'|trans }}
+                    </h4>
+                </div>
+                <div class="card-body p-0">
+                    {{ include('ranking/_ranking_table.html.twig', {
+                        items: rankings.losers.relative,
+                        type: 'losers',
+                        showAbsolute: false
+                    }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Add hover image script #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const hoverImg = document.getElementById('hover-img');
+    const cardImages = document.querySelectorAll('.card-hover-img');
+
+    cardImages.forEach(img => {
+        img.addEventListener('mouseenter', function(e) {
+            const imgUrl = this.getAttribute('data-img');
+            if (imgUrl) {
+                hoverImg.src = imgUrl;
+                hoverImg.style.display = 'block';
+            }
+        });
+
+        img.addEventListener('mousemove', function(e) {
+            hoverImg.style.left = (e.pageX + 20) + 'px';
+            hoverImg.style.top = (e.pageY + 20) + 'px';
+        });
+
+        img.addEventListener('mouseleave', function() {
+            hoverImg.style.display = 'none';
+        });
+    });
+});
+</script>
+{% endblock %}

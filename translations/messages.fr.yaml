@@ -6,6 +6,7 @@ app:
         home: "Accueil"
         cards: "Cartes"
         expansions: "Extensions"
+        rankings: "Tendances"
         logs: "Journaux"
         admin: "Admin"
         search: "Rechercher"
@@ -92,6 +93,36 @@ app:
         finished: "Terminé"
         error: "Erreur"
         running: "En cours"
+
+    ranking:
+        title:
+            gainers: "Plus Fortes Hausses"
+            losers: "Plus Fortes Baisses"
+        timeframe:
+            1d: "1 Jour"
+            7d: "7 Jours"
+            30d: "30 Jours"
+        type:
+            gainers: "Hausses"
+            losers: "Baisses"
+        filter:
+            type: "Type"
+            timeframe: "Période"
+            variant: "Variante"
+        variant:
+            normal: "Normale"
+            foil: "Foil"
+        variation:
+            absolute: "Variation Absolue (€)"
+            relative: "Variation Relative (%)"
+        table:
+            image: "Image"
+            card: "Nom de la carte"
+            expansion: "Extension"
+            old_price: "Prix précédent"
+            current_price: "Prix actuel"
+            variation: "Variation"
+        no_data: "Aucune donnée disponible pour cette sélection"
 
 home:
     welcome: "Bienvenue sur MKM.py Front"

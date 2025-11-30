@@ -30,6 +30,8 @@ Elle sert d'interface front-end sophistiquée pour la base de données du projet
 ### 📊 Analytics & Visualisation
 - **Graphiques interactifs** Chart.js avec évolution des prix et prédictions IA
 - **Statistiques en temps réel** avec animations de compteurs sur la homepage
+- **Rankings dynamiques** : top gainers/losers en absolu et pourcentage (1j/7j/30j)
+- **Système de cache intelligent** en base de données (TTL 25h, warmup automatique)
 - **Comparaisons historiques** et analyse de tendances
 - **Export de données** en CSV et autres formats
 
@@ -125,7 +127,16 @@ php bin/console doctrine:migrations:migrate
 php bin/console asset-map:compile
 ```
 
-### 6. Lancer l'application
+### 6. Cache warmup (optionnel)
+```bash
+# Générer le cache initial pour les statistiques et rankings
+curl http://localhost:8000/cache/warmup
+
+# Ou via la commande console
+php bin/console app:stats-cache:invalidate
+```
+
+### 7. Lancer l'application
 ```bash
 # Avec Symfony CLI (recommandé)
 symfony server:start
@@ -141,29 +152,36 @@ php -S 0.0.0.0:8000 -t public
 - **Extensions** : `/fr/expansions`
 - **Cartes d'une extension** : `/fr/expansion/{id}`
 - **Détail d'une carte** : `/fr/card/{cardid}/{expansionid}`
+- **Rankings** : `/fr/rankings?timeframe=7d&foil=normal`
 - **Recherche** : `/fr/search?search=motclef`
 - **Administration** : `/fr/admin/logs/mkmpy`
 
 ### Fonctionnalités clés
 - **Changement de langue** via le sélecteur dans la navbar
 - **Thème sombre/clair** automatique ou manuel
+- **Rankings de prix** : visualisez les plus fortes hausses/baisses sur différentes périodes
+- **Filtres avancés** : normal/foil, variations absolues/relatives, 1j/7j/30j
 - **Export CSV** depuis les tables de données
 - **Graphiques interactifs** sur les pages de détail des cartes
+- **Cache automatique** pour des performances optimales
 
 ## 📁 Structure du projet
 
 ```
 frontMkmPy/
 ├── src/
+│   ├── Command/             # Commandes console (cache, stats)
 │   ├── Controller/          # Contrôleurs avec logique métier
 │   ├── Entity/              # Entités Doctrine ORM
-│   ├── Repository/          # Requêtes optimisées
+│   ├── Repository/          # Requêtes optimisées (rankings, stats)
+│   ├── Service/             # Services métier (cache, stats)
 │   └── Twig/Components/     # Composants Twig réutilisables
 ├── templates/
 │   ├── components/          # Composants UI modulaires
 │   │   └── home/           # Composants de la homepage
 │   ├── card/               # Pages des cartes
-│   └── expansion/          # Pages des extensions
+│   ├── expansion/          # Pages des extensions
+│   └── ranking/            # Pages des rankings
 ├── assets/
 │   ├── js/                 # JavaScript modulaire
 │   └── styles/             # Styles CSS personnalisés
@@ -183,6 +201,18 @@ APP_ENV=prod
 APP_SECRET=your-secret-key
 ```
 
+### Cache et performances
+```bash
+# Invalider et régénérer tous les caches
+php bin/console app:stats-cache:invalidate
+
+# Nettoyer les entrées de cache expirées
+php bin/console app:stats-cache:clean
+
+# Warmup via HTTP (pour cron)
+curl https://votre-domaine.com/cache/warmup
+```
+
 ### Production
 ```bash
 # Optimisation pour la production
@@ -192,6 +222,9 @@ php bin/console asset-map:compile
 # Permissions (Linux/Unix)
 sudo chown -R www-data:www-data var/
 sudo chmod -R 775 var/
+
+# Configuration cron recommandée (warmup quotidien)
+0 1 * * * curl -s https://votre-domaine.com/cache/warmup > /dev/null 2>&1
 ```
 
 ## 🤝 Contribution

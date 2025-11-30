@@ -6,28 +6,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\ExpansionsRepository;
-use App\Repository\ProductsRepository;
-use App\Repository\PricesRepository;
+use App\Service\StatsCacheService;
 
 class HomeController extends AbstractController{
 
     #[Route('/', name: 'home')]
-    function home (ExpansionsRepository $expansionsRepository, ProductsRepository $productsRepository, PricesRepository $pricesRepository): Response 
+    function home (StatsCacheService $statsCacheService): Response
     {
-        // Get statistics for the homepage
-        $totalExpansions = $expansionsRepository->count([]);
-        $totalCards = $productsRepository->count([]);
-        $totalPrices = $pricesRepository->count([]);
-        
-        // Get recent expansions with card count
-        $recentExpansions = $expansionsRepository->findRecentExpansionsWithCardCount(6);
-        
+        // Get statistics from cache or generate them
+        $stats = $statsCacheService->getHomeStats();
+
         return $this->render('home.html.twig', [
-            'totalExpansions' => $totalExpansions,
-            'totalCards' => $totalCards,
-            'totalPrices' => $totalPrices,
-            'recentExpansions' => $recentExpansions
+            'totalExpansions' => $stats['totalExpansions'],
+            'totalCards' => $stats['totalCards'],
+            'totalPrices' => $stats['totalPrices'],
+            'recentExpansions' => $stats['recentExpansions']
         ]);
     }
 
