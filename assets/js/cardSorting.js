@@ -19,6 +19,23 @@ function sortCards(sortType) {
     cards.forEach(card => container.appendChild(card));
 }
 
+// Toggle Art Series cards
+function toggleArtSeries(hide) {
+    localStorage.setItem('hideArtSeries', hide ? 'true' : 'false');
+
+    const container = document.querySelector('.row');
+    if (!container) return;
+
+    const cards = Array.from(container.children);
+
+    cards.forEach(card => {
+        const cardName = (card.dataset.cardName || '').toLowerCase();
+        if (cardName.includes('art series')) {
+            card.style.display = hide ? 'none' : '';
+        }
+    });
+}
+
 function initSort() {
     const radios = document.querySelectorAll('input[name="sort"]');
     if (!radios.length) return;
@@ -32,6 +49,14 @@ function initSort() {
     if (radio) {
         radio.checked = true;
         sortCards(saved);
+    }
+
+    // Initialize Art Series filter
+    const hideArtSeriesCheckbox = document.getElementById('hideArtSeries');
+    if (hideArtSeriesCheckbox) {
+        const hideArtSeries = localStorage.getItem('hideArtSeries') === 'true';
+        hideArtSeriesCheckbox.checked = hideArtSeries;
+        toggleArtSeries(hideArtSeries);
     }
 }
 

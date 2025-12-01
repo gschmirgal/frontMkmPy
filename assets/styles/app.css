@@ -1,4 +1,8 @@
 /*nav bar*/
+.navbar.sticky-top {
+    z-index: 1030;
+}
+
 @media (min-width: 992px) {
     .navbar-search-input {
         min-width: 200px !important;
@@ -31,4 +35,16 @@ ul.pagination {
 /* icones theme sombre */
 [data-bs-theme="dark"] .expansion-icon {
     filter: invert(1);
+}
+
+/* Fix z-index for sticky table headers */
+.table thead.sticky-top {
+    z-index: 10;
+}
+
+/* Art Series filter positioning */
+@media (min-width: 768px) {
+    .filter-art-series {
+        margin-left: auto;
+    }
 }

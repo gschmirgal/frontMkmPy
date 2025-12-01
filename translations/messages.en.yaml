@@ -82,7 +82,10 @@ app:
         collector_number: "Collector Number"
         name_asc: "A-Z"
         name_desc: "Z-A"
-    
+
+    filter:
+        hide_art_series: "Hide Art Series"
+
     pagination:
         previous: "Previous"
         next: "Next"

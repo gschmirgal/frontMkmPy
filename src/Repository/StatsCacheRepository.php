@@ -55,4 +55,15 @@ class StatsCacheRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * Delete all cache entries
+     */
+    public function deleteAllCache(): int
+    {
+        return $this->createQueryBuilder('s')
+            ->delete()
+            ->getQuery()
+            ->execute();
+    }
 }

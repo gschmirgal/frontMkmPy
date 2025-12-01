@@ -11,10 +11,13 @@ use App\Service\StatsCacheService;
 class HomeController extends AbstractController{
 
     #[Route('/', name: 'home')]
-    function home (StatsCacheService $statsCacheService): Response
+    function home (Request $request, StatsCacheService $statsCacheService): Response
     {
+        // Check if force refresh is requested
+        $forceRefresh = $request->query->get('force') === '1';
+
         // Get statistics from cache or generate them
-        $stats = $statsCacheService->getHomeStats();
+        $stats = $statsCacheService->getHomeStats($forceRefresh);
 
         return $this->render('home.html.twig', [
             'totalExpansions' => $stats['totalExpansions'],

@@ -22,6 +22,7 @@ class RankingController extends AbstractController
         $timeframe = $request->query->get('timeframe', '1d');
         $foil = $request->query->get('foil', 'normal');
         $isFoil = $foil === 'foil';
+        $forceRefresh = $request->query->get('force') === '1';
 
         // Validate timeframe
         if (!in_array($timeframe, ['1d', '7d', '30d'])) {
@@ -29,10 +30,10 @@ class RankingController extends AbstractController
         }
 
         // Get all rankings for the selected timeframe
-        $gainersAbsolute = $this->statsCacheService->getRankings($timeframe, 'gainers_absolute', $isFoil);
-        $losersAbsolute = $this->statsCacheService->getRankings($timeframe, 'losers_absolute', $isFoil);
-        $gainersRelative = $this->statsCacheService->getRankings($timeframe, 'gainers_relative', $isFoil);
-        $losersRelative = $this->statsCacheService->getRankings($timeframe, 'losers_relative', $isFoil);
+        $gainersAbsolute = $this->statsCacheService->getRankings($timeframe, 'gainers_absolute', $isFoil, $forceRefresh);
+        $losersAbsolute = $this->statsCacheService->getRankings($timeframe, 'losers_absolute', $isFoil, $forceRefresh);
+        $gainersRelative = $this->statsCacheService->getRankings($timeframe, 'gainers_relative', $isFoil, $forceRefresh);
+        $losersRelative = $this->statsCacheService->getRankings($timeframe, 'losers_relative', $isFoil, $forceRefresh);
 
         // Prepare data for the view
         $rankings = [

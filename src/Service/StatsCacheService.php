@@ -24,15 +24,17 @@ class StatsCacheService
     /**
      * Get homepage statistics from cache or generate them
      */
-    public function getHomeStats(): array
+    public function getHomeStats(bool $forceRefresh = false): array
     {
         $cacheKey = 'home_stats';
 
-        // Try to get from cache
-        $cache = $this->statsCacheRepository->findValidCache($cacheKey);
+        // Try to get from cache (skip if force refresh)
+        if (!$forceRefresh) {
+            $cache = $this->statsCacheRepository->findValidCache($cacheKey);
 
-        if ($cache !== null) {
-            return $cache->getCacheValue();
+            if ($cache !== null) {
+                return $cache->getCacheValue();
+            }
         }
 
         // Generate stats
@@ -62,14 +64,12 @@ class StatsCacheService
      */
     private function saveToCache(string $cacheKey, mixed $data): void
     {
-        // Check if cache entry already exists
-        $cache = $this->entityManager->getRepository(StatsCache::class)
-            ->findOneBy(['cacheKey' => $cacheKey]);
+        // Delete existing entry if any (to avoid duplicate key errors)
+        $this->statsCacheRepository->deleteCacheByKey($cacheKey);
 
-        if ($cache === null) {
-            $cache = new StatsCache();
-            $cache->setCacheKey($cacheKey);
-        }
+        // Create new cache entry
+        $cache = new StatsCache();
+        $cache->setCacheKey($cacheKey);
 
         $now = new \DateTime();
         $expiresAt = (clone $now)->modify('+' . self::CACHE_TTL_SECONDS . ' seconds');
@@ -109,15 +109,17 @@ class StatsCacheService
     /**
      * Get rankings data from cache or generate them
      */
-    public function getRankings(string $timeframe, string $type, bool $foil = false): array
+    public function getRankings(string $timeframe, string $type, bool $foil = false, bool $forceRefresh = false): array
     {
         $cacheKey = "rankings_{$type}_{$timeframe}_" . ($foil ? 'foil' : 'normal');
 
-        // Try to get from cache
-        $cache = $this->statsCacheRepository->findValidCache($cacheKey);
+        // Try to get from cache (skip if force refresh)
+        if (!$forceRefresh) {
+            $cache = $this->statsCacheRepository->findValidCache($cacheKey);
 
-        if ($cache !== null) {
-            return $cache->getCacheValue();
+            if ($cache !== null) {
+                return $cache->getCacheValue();
+            }
         }
 
         // Generate rankings
@@ -160,6 +162,14 @@ class StatsCacheService
                 }
             }
         }
+    }
+
+    /**
+     * Clear all cache entries (DELETE all rows)
+     */
+    public function clearAllCache(): void
+    {
+        $this->statsCacheRepository->deleteAllCache();
     }
 
     /**
