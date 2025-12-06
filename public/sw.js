@@ -13,7 +13,14 @@ self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                return cache.addAll(urlsToCache);
+                // Cache les fichiers un par un pour éviter qu'une erreur bloque tout
+                return Promise.all(
+                    urlsToCache.map(url => {
+                        return cache.add(url).catch(err => {
+                            console.warn('Failed to cache:', url, err);
+                        });
+                    })
+                );
             })
     );
 });

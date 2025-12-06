@@ -13,8 +13,8 @@
         </thead>
         <tbody>
             {% for key, item in items %}
-                <tr>
-                    <td class="text-center fw-bold small">{{ key + 1 }}</td>
+                <tr data-reserved="{{ item.reserved ? 'true' : 'false' }}">
+                    <td class="text-center fw-bold small rank-number">{{ key + 1 }}</td>
                     <td>
                         {% if item.imageUrl %}
                             <img src="{{ item.imageUrl }}" alt="{{ item.product.name }}"

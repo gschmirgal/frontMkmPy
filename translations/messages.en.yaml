@@ -85,6 +85,7 @@ app:
 
     filter:
         hide_art_series: "Hide Art Series"
+        ignore_reserved_list: "Ignore Reserved List"
 
     pagination:
         previous: "Previous"
@@ -152,6 +153,10 @@ home:
     recent_expansions: "Latest Sets"
     view_all: "View All"
     view_cards: "View Cards"
+    trending:
+        title: "Weekly Trends"
+        top_gainers: "Top Gainers"
+        top_losers: "Top Losers"
 
 pagination:
     previous: "Previous"

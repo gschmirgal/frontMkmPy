@@ -10,29 +10,35 @@
         {{expansion.name}}
     </h1>
     
-    <div class="d-flex align-items-center gap-3 mb-3 flex-wrap">
-        <div class="d-flex align-items-center gap-3">
-            <span>{{ 'app.sorting.by'|trans }}</span>
-            <div class="btn-group">
-                <input type="radio" class="btn-check" name="sort" value="collector_number" id="number" autocomplete="off"
-                       onchange="sortCards(this.value)">
-                <label class="btn" for="number">{{ 'app.sorting.collector_number'|trans }}</label>
+    <div class="ranking-filters-modern mb-4">
+        <div class="d-flex flex-column flex-md-row gap-3">
+            {# Sorting filter #}
+            <div class="filter-group">
+                <div class="filter-label">{{ 'app.sorting.by'|trans }}</div>
+                <div class="filter-options">
+                    <input type="radio" class="btn-check" name="sort" value="collector_number" id="number" autocomplete="off"
+                           onchange="sortCards(this.value)">
+                    <label class="filter-option" for="number">{{ 'app.sorting.collector_number'|trans }}</label>
 
-                <input type="radio" class="btn-check" name="sort" value="name_asc" id="AZ" autocomplete="off"
-                       onchange="sortCards(this.value)">
-                <label class="btn" for="AZ">{{ 'app.sorting.name_asc'|trans }}</label>
+                    <input type="radio" class="btn-check" name="sort" value="name_asc" id="AZ" autocomplete="off"
+                           onchange="sortCards(this.value)">
+                    <label class="filter-option" for="AZ">{{ 'app.sorting.name_asc'|trans }}</label>
 
-                <input type="radio" class="btn-check" name="sort" value="name_desc" id="ZA" autocomplete="off"
-                       onchange="sortCards(this.value)">
-                <label class="btn" for="ZA">{{ 'app.sorting.name_desc'|trans }}</label>
+                    <input type="radio" class="btn-check" name="sort" value="name_desc" id="ZA" autocomplete="off"
+                           onchange="sortCards(this.value)">
+                    <label class="filter-option" for="ZA">{{ 'app.sorting.name_desc'|trans }}</label>
+                </div>
             </div>
-        </div>
 
-        <div class="form-check filter-art-series">
-            <input class="form-check-input" type="checkbox" value="" id="hideArtSeries" onchange="toggleArtSeries(this.checked)">
-            <label class="form-check-label" for="hideArtSeries">
-                {{ 'app.filter.hide_art_series'|trans }}
-            </label>
+            {# Art Series filter #}
+            <div class="filter-group ms-md-auto align-self-center">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="hideArtSeries" onchange="toggleArtSeries(this.checked)">
+                    <label class="form-check-label" for="hideArtSeries">
+                        {{ 'app.filter.hide_art_series'|trans }}
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
     {{ component('list_cards', {data: cards}) }}

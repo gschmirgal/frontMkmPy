@@ -85,6 +85,7 @@ app:
 
     filter:
         hide_art_series: "Masquer les Art Series"
+        ignore_reserved_list: "Ignorer la Reserved List"
 
     pagination:
         previous: "Précédent"
@@ -152,6 +153,10 @@ home:
     recent_expansions: "Dernières Éditions"
     view_all: "Voir Tout"
     view_cards: "Voir les Cartes"
+    trending:
+        title: "Tendances de la Semaine"
+        top_gainers: "Plus Fortes Hausses"
+        top_losers: "Plus Fortes Baisses"
 
 pagination:
     previous: "Précédent"

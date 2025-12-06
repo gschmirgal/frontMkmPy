@@ -112,12 +112,14 @@ class RankingController extends AbstractController
 
             $variation = $variationMap[$priceId];
 
-            // Get Scryfall image
+            // Get Scryfall image and reserved status
             $scryfallProducts = $product->getScryfall();
             $imageUrl = null;
+            $reserved = false;
             if ($scryfallProducts->count() > 0) {
                 $scryfallProduct = $scryfallProducts->first();
                 $imageUrl = $scryfallProduct->getImgNormalUri();
+                $reserved = $scryfallProduct->isReserved() ?? false;
             }
 
             $result[] = [
@@ -128,6 +130,7 @@ class RankingController extends AbstractController
                 'variationAbs' => $variation['variation_absolute'],
                 'variationPct' => $variation['variation_relative'],
                 'imageUrl' => $imageUrl,
+                'reserved' => $reserved,
             ];
         }
 
