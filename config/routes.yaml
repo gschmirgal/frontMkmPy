@@ -1,4 +1,9 @@
-# Cache warmup route (without locale, for cron jobs)
+# Routes WITHOUT locale prefix (must be first to have priority)
+root_redirect:
+    path: /
+    controller: App\Controller\LocaleRedirectController::redirectToLocale
+    methods: [GET]
+
 cache_warmup:
     path: /cache/warmup
     controller: App\Controller\CacheWarmupController::warmup
@@ -15,11 +20,3 @@ controllers_with_locale:
         _locale: 'en|fr'
     defaults:
         _locale: 'en'
-
-# Route par défaut qui redirige vers /en
-default_locale:
-    path: /
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
-    defaults:
-        route: 'home'
-        _locale: 'fr'

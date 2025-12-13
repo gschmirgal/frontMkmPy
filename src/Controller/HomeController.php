@@ -12,7 +12,7 @@ use App\Repository\PricesRepository;
 
 class HomeController extends AbstractController{
 
-    #[Route('/', name: 'home')]
+    #[Route('', name: 'home')]
     function home (Request $request, StatsCacheService $statsCacheService, ProductsRepository $productsRepository, PricesRepository $pricesRepository): Response
     {
         // Check if force refresh is requested
