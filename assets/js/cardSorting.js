@@ -36,6 +36,40 @@ function toggleArtSeries(hide) {
     });
 }
 
+// Toggle Token cards
+function toggleTokens(hide) {
+    localStorage.setItem('hideTokens', hide ? 'true' : 'false');
+
+    const container = document.querySelector('.row');
+    if (!container) return;
+
+    const cards = Array.from(container.children);
+
+    cards.forEach(card => {
+        const cardName = (card.dataset.cardName || '').toLowerCase();
+        if (cardName.includes('token')) {
+            card.style.display = hide ? 'none' : '';
+        }
+    });
+}
+
+// Toggle Code cards (Magic Online Code or Arena Code)
+function toggleCodes(hide) {
+    localStorage.setItem('hideCodes', hide ? 'true' : 'false');
+
+    const container = document.querySelector('.row');
+    if (!container) return;
+
+    const cards = Array.from(container.children);
+
+    cards.forEach(card => {
+        const cardName = (card.dataset.cardName || '').toLowerCase();
+        if (cardName.includes('magic online code') || cardName.includes('arena code')) {
+            card.style.display = hide ? 'none' : '';
+        }
+    });
+}
+
 function initSort() {
     const radios = document.querySelectorAll('input[name="sort"]');
     if (!radios.length) return;
@@ -57,6 +91,22 @@ function initSort() {
         const hideArtSeries = localStorage.getItem('hideArtSeries') === 'true';
         hideArtSeriesCheckbox.checked = hideArtSeries;
         toggleArtSeries(hideArtSeries);
+    }
+
+    // Initialize Tokens filter
+    const hideTokensCheckbox = document.getElementById('hideTokens');
+    if (hideTokensCheckbox) {
+        const hideTokens = localStorage.getItem('hideTokens') === 'true';
+        hideTokensCheckbox.checked = hideTokens;
+        toggleTokens(hideTokens);
+    }
+
+    // Initialize Codes filter
+    const hideCodesCheckbox = document.getElementById('hideCodes');
+    if (hideCodesCheckbox) {
+        const hideCodes = localStorage.getItem('hideCodes') === 'true';
+        hideCodesCheckbox.checked = hideCodes;
+        toggleCodes(hideCodes);
     }
 }
 

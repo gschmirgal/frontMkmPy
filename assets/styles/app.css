@@ -163,3 +163,21 @@ ul.pagination {
         display: none;
     }
 }
+
+/* Filter checkboxes styling */
+.filter-checkboxes {
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-checkboxes .form-check {
+    margin-bottom: 0;
+}
+
+.filter-checkboxes .form-check-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}

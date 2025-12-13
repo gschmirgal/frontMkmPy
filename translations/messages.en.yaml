@@ -84,7 +84,10 @@ app:
         name_desc: "Z-A"
 
     filter:
-        hide_art_series: "Hide Art Series"
+        hide_label: "Hide:"
+        hide_art_series: "Art Series"
+        hide_tokens: "Tokens"
+        hide_codes: "Codes"
         ignore_reserved_list: "Ignore Reserved List"
 
     pagination:
