@@ -8,12 +8,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Service\StatsCacheService;
+use App\Repository\ProductsRepository;
 
 class RankingController extends AbstractController
 {
     public function __construct(
         private StatsCacheService $statsCacheService,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
+        private ProductsRepository $productsRepository
     ) {}
 
     #[Route('/rankings', name: 'app_rankings')]
@@ -92,9 +94,18 @@ class RankingController extends AbstractController
 
         // Map entities by ID
         $entityMap = [];
+        $productIds = [];
         foreach ($entities as $entity) {
             $entityMap[$entity->getId()] = $entity;
+            $product = $entity->getProduct();
+            if ($product) {
+                $productIds[] = $product->getId();
+            }
         }
+
+        // Get truly reserved product IDs (based on meta card matching)
+        $trulyReservedIds = $this->productsRepository->findTrulyReservedProductIds($productIds);
+        $trulyReservedSet = array_flip($trulyReservedIds); // Convert to associative array for O(1) lookup
 
         // Build result array preserving the original order
         $result = [];
@@ -112,15 +123,16 @@ class RankingController extends AbstractController
 
             $variation = $variationMap[$priceId];
 
-            // Get Scryfall image and reserved status
+            // Get Scryfall image
             $scryfallProducts = $product->getScryfall();
             $imageUrl = null;
-            $reserved = false;
             if ($scryfallProducts->count() > 0) {
                 $scryfallProduct = $scryfallProducts->first();
                 $imageUrl = $scryfallProduct->getImgNormalUri();
-                $reserved = $scryfallProduct->isReserved() ?? false;
             }
+
+            // Check if truly reserved (based on meta card)
+            $reserved = isset($trulyReservedSet[$product->getId()]);
 
             $result[] = [
                 'product' => $product,

@@ -134,6 +134,54 @@ class ProductsRepository extends ServiceEntityRepository
             return $orderedProducts;
         }
 
+    /**
+     * Find product IDs that are truly reserved (based on meta card matching)
+     * A product is considered truly reserved if ANY version of its meta card is reserved in Scryfall
+     *
+     * @param array $productIds Array of product IDs to check
+     * @return array Array of product IDs that are truly reserved
+     */
+    public function findTrulyReservedProductIds(array $productIds): array
+    {
+        if (empty($productIds)) {
+            return [];
+        }
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        // Optimized single query approach:
+        // 1. Get all id_meta_card values for the input products
+        // 2. Find which meta cards have at least one reserved version in scryfall
+        // 3. Return all product IDs that belong to those reserved meta cards
+
+        // Build placeholders for IN clause
+        $placeholders = implode(',', array_fill(0, count($productIds), '?'));
+
+        $sql = "
+            SELECT DISTINCT p1.id
+            FROM products p1
+            WHERE p1.id IN ($placeholders)
+              AND p1.id_meta_card IN (
+                SELECT DISTINCT p2.id_meta_card
+                FROM products p2
+                INNER JOIN scryfall_products sp ON sp.card_market_id_id = p2.id
+                WHERE sp.reserved = 1
+                  AND p2.id_meta_card IN (
+                    SELECT DISTINCT id_meta_card
+                    FROM products
+                    WHERE id IN ($placeholders)
+                  )
+              )
+        ";
+
+        $stmt = $conn->prepare($sql);
+        // Bind productIds twice (for both IN clauses)
+        $params = array_merge($productIds, $productIds);
+        $result = $stmt->executeQuery($params);
+
+        return array_column($result->fetchAllAssociative(), 'id');
+    }
+
     //    /**
     //     * @return Products[] Returns an array of Products objects
     //     */
