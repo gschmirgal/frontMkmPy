@@ -1,8 +1,6 @@
 // Service Worker pour PWA MKMpy
-const CACHE_NAME = 'mkmpy-v1';
+const CACHE_NAME = 'mkmpy-v2';
 const urlsToCache = [
-    '/',
-    '/styles/app.css',
     '/manifest.json',
     '/icons/icon-192.png',
     '/icons/icon-512.png'
@@ -23,10 +21,20 @@ self.addEventListener('install', event => {
                 );
             })
     );
+    // Force le nouveau Service Worker à devenir actif immédiatement
+    self.skipWaiting();
 });
 
 // Interception des requêtes réseau
 self.addEventListener('fetch', event => {
+    const url = new URL(event.request.url);
+
+    // Ne jamais mettre en cache la route racine (/) car elle fait une redirection
+    if (url.pathname === '/' || url.pathname.startsWith('/cache/')) {
+        event.respondWith(fetch(event.request));
+        return;
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then(response => {
