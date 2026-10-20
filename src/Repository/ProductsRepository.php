@@ -98,8 +98,7 @@ class ProductsRepository extends ServiceEntityRepository
                     $orderBy
             ";
             
-            $stmt = $conn->prepare($sql);
-            $result = $stmt->executeQuery(['expansionId' => $expansionId]);
+            $result = $conn->executeQuery($sql, ['expansionId' => $expansionId]);
             $productIds = array_column($result->fetchAllAssociative(), 'id');
             
             if (empty($productIds)) {
@@ -174,10 +173,9 @@ class ProductsRepository extends ServiceEntityRepository
               )
         ";
 
-        $stmt = $conn->prepare($sql);
         // Bind productIds twice (for both IN clauses)
         $params = array_merge($productIds, $productIds);
-        $result = $stmt->executeQuery($params);
+        $result = $conn->executeQuery($sql, $params);
 
         return array_column($result->fetchAllAssociative(), 'id');
     }

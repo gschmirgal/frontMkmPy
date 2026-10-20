@@ -1,8 +1,8 @@
 # frontMkmPy
 
-![Symfony](https://img.shields.io/badge/symfony-7.3-000000.svg?style=for-the-badge&logo=symfony)
-![PHP](https://img.shields.io/badge/php-8.2+-777BB4.svg?style=for-the-badge&logo=php)
-![Doctrine](https://img.shields.io/badge/doctrine-3.5+-FC6F2B.svg?style=for-the-badge&logo=doctrine)
+![Symfony](https://img.shields.io/badge/symfony-8.1-000000.svg?style=for-the-badge&logo=symfony)
+![PHP](https://img.shields.io/badge/php-8.4+-777BB4.svg?style=for-the-badge&logo=php)
+![Doctrine](https://img.shields.io/badge/doctrine-3.7+-FC6F2B.svg?style=for-the-badge&logo=doctrine)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-5.0-7952B3.svg?style=for-the-badge&logo=bootstrap)
 ![Chart.js](https://img.shields.io/badge/chart.js-4.0-FF6384.svg?style=for-the-badge&logo=chart.js)
 ![Turbo](https://img.shields.io/badge/turbo-SPA-00A8E6.svg?style=for-the-badge)
@@ -64,9 +64,9 @@ Elle sert d'interface front-end sophistiquée pour la base de données du projet
 ## 🛠️ Stack technique
 
 ### Backend
-- **Symfony 7.3** - Framework PHP moderne
-- **Doctrine ORM 3.5+** - Mapping objet-relationnel
-- **PHP 8.2+** - Dernières fonctionnalités du langage
+- **Symfony 8.1** - Framework PHP moderne
+- **Doctrine ORM 3.7+** (DBAL 4) - Mapping objet-relationnel
+- **PHP 8.4+** - Dernières fonctionnalités du langage
 - **MySQL/MariaDB** - Base de données relationnelle
 
 ### Frontend
@@ -84,7 +84,7 @@ Elle sert d'interface front-end sophistiquée pour la base de données du projet
 
 ## 📋 Prérequis
 
-- **PHP >= 8.2** avec extensions : `pdo_mysql`, `intl`, `opcache`
+- **PHP >= 8.4.1** avec extensions : `pdo_mysql`, `intl`, `opcache`
 - **Composer 2.x** - Gestionnaire de dépendances PHP
 - **MySQL 8.0+** ou **MariaDB 10.6+**
 - **Symfony CLI** (recommandé pour le développement)
@@ -243,7 +243,7 @@ sudo chmod -R 775 var/
 - **[Portfolio](https://gschmirgal.ovh)** - Portfolio du développeur
 
 ### Documentation
-- [Symfony 7.3](https://symfony.com/doc/7.3/index.html)
+- [Symfony 8.1](https://symfony.com/doc/8.1/index.html)
 - [Doctrine ORM](https://www.doctrine-project.org/projects/doctrine-orm/en/current/index.html)
 - [Bootstrap 5](https://getbootstrap.com/docs/5.3/)
 - [Chart.js](https://www.chartjs.org/)
